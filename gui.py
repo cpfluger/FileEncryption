@@ -1,1 +1,2 @@
-from PyQT5 import *
+from PyQT5 import
+print("Dies ist ein Testtext")
