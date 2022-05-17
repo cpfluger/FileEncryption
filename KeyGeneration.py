@@ -61,7 +61,7 @@ class RSAKeyGenerator(KeyGenerator):
 
 class AESKeyGenerator(KeyGenerator):
     def __int__(self):
-        pass
+        print("clemi sus")
 
     def generate_private_key(self):
         pass
