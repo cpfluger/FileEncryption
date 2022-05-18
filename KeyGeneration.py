@@ -71,5 +71,6 @@ class AESKeyGeneration(KeyGenerator):
         return self.__crypto_key
 
     def key_generate(self):
-
-        self.__crypto_key = hashlib.scrypt(self.__password, self.__salt, n=2**14, r=8, p=1, dklen=16)
+        self.__password = get_random_bytes(16)
+        self.__salt = get_random_bytes(16)
+        self.__crypto_key = hashlib.scrypt(password = self.__password, salt = self.__salt, n=2**14, r=8, p=1, dklen=16)
