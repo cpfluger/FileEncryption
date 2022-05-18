@@ -64,8 +64,7 @@ class RSAKeyGenerator(KeyGenerator):
 
 class AESKeyGeneration(KeyGenerator):
     def __int__(self):
-        self.__password = get_random_bytes(16)
-        self.__salt = get_random_bytes(16)
+        pass
 
     def get_key(self):
         return self.__crypto_key
@@ -74,3 +73,10 @@ class AESKeyGeneration(KeyGenerator):
         self.__password = get_random_bytes(16)
         self.__salt = get_random_bytes(16)
         self.__crypto_key = hashlib.scrypt(password = self.__password, salt = self.__salt, n=2**14, r=8, p=1, dklen=16)
+
+
+
+tmp = AESKeyGeneration()
+tmp.key_generate()
+print (tmp.get_key())
+
