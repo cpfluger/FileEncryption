@@ -1,6 +1,9 @@
 from CalculationAuxiliary import get_low_level_prime, \
     is_miller_rabin_passed, is_relatively_prime_to, extended_euclidic_algortihtm
 from Models import RSAKeyModel
+import hashlib
+from Cryptodome.Cipher import AES
+from Cryptodome.Random import get_random_bytes
 
 
 class KeyGenerator():
@@ -59,13 +62,14 @@ class RSAKeyGenerator(KeyGenerator):
 
 
 
-class AESKeyGenerator(KeyGenerator):
+class AESKeyGeneration(KeyGenerator):
     def __int__(self):
-        print("clemi sus")
+        self.__password = get_random_bytes(16)
+        self.__salt = get_random_bytes(16)
 
-    def generate_private_key(self):
-        pass
+    def get_key(self):
+        return self.__crypto_key
 
+    def key_generate(self):
 
-    def generate_public_key(self):
-        pass
+        self.__crypto_key = hashlib.scrypt(self.__password, self.__salt, n=2**14, r=8, p=1, dklen=16)
