@@ -50,8 +50,8 @@ class RSAKeyGenerator(KeyGenerator):
 
 
     def generate_decryption_number(self):
-        g, u, v = extended_euclidic_algortihtm(self.__encryption_number_e, self.__product_number_n)
-        self.__decryption_number_d = u % self.__product_number_n
+        g, u, v = extended_euclidic_algortihtm(self.__encryption_number_e, self.__eulers_totient_z)
+        self.__decryption_number_d = u % self.__eulers_totient_z
 
 
     def create_prime_number(self, number_of_bits):
@@ -63,12 +63,17 @@ class RSAKeyGenerator(KeyGenerator):
 
 
 class AESKeyGeneration(KeyGenerator):
+    
     def __int__(self):
-        pass
+        self.__password = None
+        self.__salt = None
+        self.__crypto_key = None
 
+        
     def get_key(self):
         return self.__crypto_key
 
+    
     def key_generate(self):
         self.__password = get_random_bytes(16)
         self.__salt = get_random_bytes(16)
