@@ -1,5 +1,6 @@
 from random import randint
 from Models import RSAKeyModel
+from Cryptodome.Cipher import AES
 
 class Cryptography():
 
@@ -56,9 +57,16 @@ class AES(Cryptography):
 
 
     def encrypt(self, byte_array):
-        pass
+        self.__cipher = AES.new(self._public_key, AES.MODE_GCM)
+        self.__ciphertext = self.__cipher.encrypt(byte_array)
+        self.__file_out = open("encryptedfile.bin", "wb")
+        [ self.__file_out.write(x) for x in (self.__cipher.nonce, self.__ciphertext) ]
+        self.__file_out.close()
 
 
     def decrypt(self, byte_array):
-        pass
+        self.__file_in = open("encryptedfile.bin", "rb")
+        self.__nonce, self.__ciphertext = [ self.__file_in.read(x) for x in (16, -1) ]
+        self.__plaincipher = AES.new(self.__key, AES.MODE_GCM, self.__nonce)
+        self.__plaintext = self.__plaincipher.decrypt(self.__ciphertext)
 
