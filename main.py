@@ -1,6 +1,6 @@
 from CalculationAuxiliary import get_low_level_prime, is_miller_rabin_passed, \
     is_relatively_prime_to, euclidic_algorithm
-from KeyGenerator import KeyGenerator, RSAKeyGenerator
+from KeyGeneration import RSAKeyGenerator, KeyGenerator
 from Cryptography import RSA, AES, Cryptography
 from Models import RSAKeyModel
 
@@ -9,7 +9,7 @@ if __name__ == '__main__':
     
     #generating private and public RSA keys
     obj = RSAKeyGenerator()
-    obj.load_generator(8)   #8bit prime numbers for key generation work pretty well, 128bit throws a "memory error" exception after long time calculating, please execute on pc with high ram ressources
+    obj.load_generator(16)   #8bit prime numbers for key generation work pretty well, 128bit throws a "memory error" exception after long time calculating, please execute on pc with high ram ressources
     pubkey = obj.get_public_key()
     privkey = obj.get_private_key()
 
