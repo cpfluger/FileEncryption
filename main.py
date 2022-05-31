@@ -1,7 +1,7 @@
 from CalculationAuxiliary import get_low_level_prime, is_miller_rabin_passed, \
     is_relatively_prime_to, euclidic_algorithm
 from KeyGeneration import RSAKeyGenerator, AESKeyGeneration, KeyGenerator
-from Cryptography import RSA, AES, Cryptography
+from Cryptography import RSA, AES_Cipher, Cryptography
 from Models import RSAKeyModel
 
 
@@ -33,14 +33,15 @@ if __name__ == '__main__':
 
 
     # #AES key generation
-    # key = AESKeyGeneration()
-    # key.key_generate()
-    # crypto_key = key.get_key()
+    key = AESKeyGeneration()
+    key.key_generate()
+    crypto_key = key.get_key()
 
-    # aes = AES(crypto_key)
-    # aes_encr = aes.encrypt(['ich bin ein plaintext'])
-    # print(aes_encr)
-    # aes_decr = aes.decrypt([aes_encr])
+    aes = AES_Cipher(crypto_key, crypto_key)
+    aes_encr = aes.encrypt(b'ich bin ein plaintext')
+    print(aes_encr)
+    aes_decr = aes.decrypt(aes_encr)
+    print(aes_decr)
 
 
 

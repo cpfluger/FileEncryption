@@ -50,23 +50,25 @@ class RSA(Cryptography):
 
 
 
-class AES(Cryptography):
+class AES_Cipher(Cryptography):
   
-    def __int__(self, public_key):
-        super(AES, self).__init__(public_key, public_key)
+    def __int__(self, public_key, private_key):
+        super().__init__(public_key, private_key)
 
 
     def encrypt(self, byte_array):
-        self.__cipher = AES.new(self._public_key, AES.MODE_GCM)
-        self.__ciphertext = self.__cipher.encrypt(byte_array)
-        self.__file_out = open("encryptedfile.bin", "wb")
-        [ self.__file_out.write(x) for x in (self.__cipher.nonce, self.__ciphertext) ]
-        self.__file_out.close()
+        self.__input = byte_array
+        self.__tmp_array = []           
+        self.__cipher = AES.new(self._public_key, AES.MODE_GCM)             
+        self.__ciphertext = self.__cipher.encrypt(self.__input)
+        self.__tmp_array.append(self.__cipher.nonce)
+        self.__tmp_array.append(self.__ciphertext)
+        return self.__ciphertext
 
 
     def decrypt(self, byte_array):
-        self.__file_in = open("encryptedfile.bin", "rb")
-        self.__nonce, self.__ciphertext = [ self.__file_in.read(x) for x in (16, -1) ]
-        self.__plaincipher = AES.new(self.__key, AES.MODE_GCM, self.__nonce)
-        self.__plaintext = self.__plaincipher.decrypt(self.__ciphertext)
+        self.__input = byte_array
+        self.__plaincipher = AES.new(self._public_key, AES.MODE_GCM, self.__tmp_array[0])
+        self.__plaintext = self.__plaincipher.decrypt(self.__tmp_array[1])
+        return self.__plaintext
 
