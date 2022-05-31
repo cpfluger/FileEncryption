@@ -1,28 +1,45 @@
-from PyQt5.QtWidgets import QMainWindow, QApplication
+from PyQt5.QtWidgets import *
+from PyQt5 import QtGui
 import sys
 
 
-class MainWidget(QMainWindow):
+class MainWindow(QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Drag and Drop")
-        self.resize(720, 480)
-        self.setAcceptDrops(True)
+        self.initUI()
+        self.filename = ""
 
-    def dragEnterEvent(self, event):
-        if event.mimeData().hasUrls():
-            event.accept()
-        else:
-            event.ignore()
+    def initUI(self):
 
-    def dropEvent(self, event):
-        files = [u.toLocalFile() for u in event.mimeData().urls()]
-        for f in files:
-            print(f)
+        header = QLabel("Dateiverschlüsselung", self)
+        header.move(20,10)
+        
+        font_header = QtGui.QFont()
+        font_header.setPointSize(14)
+        header.setFont(font_header)
 
 
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    ui = MainWidget()
-    ui.show()
-    sys.exit(app.exec_())
+        encrypt_btn = QPushButton("Encrypt Button", self)
+        encrypt_btn.move(330,50)
+
+        decrypt_btn = QPushButton("Decrypt Button", self)
+        decrypt_btn.move(330,150)
+
+        browse_btn = QPushButton("Browse...", self)
+        browse_btn.move(30, 180)
+        browse_btn.clicked.connect(self.browsefiles)
+
+        self.setWindowTitle("RSA-Encryption")
+        self.setMinimumSize(520, 250)
+        self.setMaximumSize(520, 250)
+        self.show()
+
+    def browsefiles(self):
+        self.temp_path = QFileDialog.getOpenFileName(self, "Open File")
+        print(self.temp_path[0])
+
+
+
+app = QApplication(sys.argv)
+w = MainWindow()
+sys.exit(app.exec_())
