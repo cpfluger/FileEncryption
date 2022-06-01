@@ -54,6 +54,20 @@ class MainWindow(QWidget):
         mytext = self.text_input.toPlainText()
         print(mytext)
 
+    def AES_encrypt(self):
+        pass
+
+    def AES_decrpyt(self):
+        pass
+
+    def RSA_encrypt(self):
+        pass
+
+    def RSA_decrypt(self):
+        pass
+
+    def change_view_mode(self):
+        pass
 
  
     
