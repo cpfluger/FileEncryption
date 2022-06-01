@@ -33,23 +33,25 @@ class MainWindow(QWidget):
 
         encrypt_btn = QPushButton("Encrypt", self)
         encrypt_btn.move(330,120)
+        encrypt_btn.clicked.connect(self.submit_encrypt)
         encrypt_btn.clicked.connect(self.encrypt_event)
 
         decrypt_btn = QPushButton("Decrypt", self)
         decrypt_btn.move(330,150)
         decrypt_btn.clicked.connect(self.decrypt_event)
+        decrypt_btn.clicked.connect(self.submit_decrypt)
 
         browse_btn = QPushButton("Browse...", self)
         browse_btn.move(30, 190)
         browse_btn.clicked.connect(self.browsefiles)
 
         self.text_input = QPlainTextEdit(self)
-        self.text_input.setGeometry(20, 80, 260, 101)
+        self.text_input.setGeometry(20, 80, 260, 40)
         self.text_input.setPlaceholderText("Input your text here...")
 
-        self.text_submit = QPushButton("Submit", self)
-        self.text_submit.move(200, 190)
-        self.text_submit.clicked.connect(self.submit)
+        self.text_output = QPlainTextEdit(self)
+        self.text_output.setGeometry(20, 130, 260, 40)
+        self.text_output.setPlaceholderText("Your decrypted text will spawn here...")
 
         self.rsa_option = QRadioButton("RSA", self)
         self.rsa_option.move(330, 50)
@@ -70,10 +72,15 @@ class MainWindow(QWidget):
         print(self.temp_path[0])
 
 
-    def submit(self):
+    def submit_encrypt(self):
         self.mytext = self.text_input.toPlainText()
-        print(self.mytext)
 
+
+    
+    def submit_decrypt(self):
+        # self.text_output.setPlainText(str(self.encrypted_txt)) 
+        # print(self.encrypted_txt)    
+        pass
     #---------------------------------EVENTS-------------------------------------------#
 
     def encrypt_event(self):
@@ -91,13 +98,14 @@ class MainWindow(QWidget):
     #--------------------------------Encrypt & Decrypt---------------------------------#  
       
     def AES_encrypt(self):
-        self.aes_enc = self.AES_Cipher.encrypt(string_to_bytestring(self.mytext))
-        print(self.aes_enc)
+        self.encrypted_txt = self.AES_Cipher.encrypt(string_to_bytestring(self.mytext))
+        self.text_output.setPlainText(str(self.encrypted_txt)) 
 
 
     def AES_decrypt(self):
-        self.aes_dec = self.AES_Cipher.decrypt(self.aes_enc)
-        print(bytestring_to_string(self.aes_dec))
+        self.mytext = self.AES_Cipher.decrypt(self.encrypted_txt)
+        self.text_input.setPlainText(bytestring_to_string(self.mytext)) 
+
 
 
     def RSA_encrypt(self):
