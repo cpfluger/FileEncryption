@@ -3,6 +3,7 @@ from PyQt5 import QtGui
 import sys
 from Cryptography import *
 from KeyGeneration import *
+from Conversion import *
 
 
 class MainWindow(QWidget):
@@ -11,7 +12,10 @@ class MainWindow(QWidget):
         self.initUI()
         self.filename = ""
         self.setAcceptDrops(True)
+
+        #AES-Stuff
         self.AES_Key = AESKeyGeneration()
+        self.AES_Key.key_generate()
         self.AES_Cipher = AES_Cipher(self.AES_Key.get_key(), self.AES_Key.get_key())
 
     def initUI(self):
@@ -71,34 +75,33 @@ class MainWindow(QWidget):
 
     def encrypt_event(self):
         if self.rsa_option.isChecked():
-            pass
-        elif self.rsa_option.isChecked():
-            self.AES_Cipher.encrypt()
-
+            self.RSA_encrypt()
+        elif self.aes_option.isChecked():
+            self.AES_encrypt()
 
     def decrypt_event(self):
         if self.rsa_option.isChecked():
-            pass
-        else:
-            pass
+            self.RSA_decrypt()
+        elif self.aes_option.isChecked():
+            self.AES_decrypt()
 
 
 
     
 
-    # def encrypt(self):
-    #     if self.rsa_option.isChecked():
-            
-    #     else:
-                
-    # def decrypt(self):
-    #     pass
+    def AES_encrypt(self):
+        print(self.mytext)
+        aes_enc = self.AES_Cipher.encrypt(string_to_bytestring(self.mytext))
+        print(aes_enc)  
 
-    # def RSA_encrypt(self):
-    #     pass
+    def AES_decrypt(self):
+        print("aes_decrypt")
 
-    # def RSA_decrypt(self):
-    #     pass
+    def RSA_encrypt(self):
+        print("RSA_encrypt")
+
+    def RSA_decrypt(self):
+        print("RSA_decrypt")
 
  
     
