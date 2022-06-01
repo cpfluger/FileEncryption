@@ -92,15 +92,15 @@ class MainWindow(QWidget):
     #--------------------------------Encrypt & Decrypt---------------------------------#  
       
     def AES_encrypt(self):
-        self.mytext = self.text_input.toPlainText()
-        self.encrypted_txt = self.AES_Cipher.encrypt(string_to_bytestring(self.mytext))
-        self.text_output.setPlainText(str(self.encrypted_txt)) 
+        mytext = self.text_input.toPlainText()
+        encrypted_txt = self.AES_Cipher.encrypt(string_to_bytestring(mytext))
+        self.text_output.setPlainText(str(encrypted_txt)) 
 
 
     def AES_decrypt(self):
-        self.encrypted_txt = self.text_output.toPlainText()
-        self.mytext = self.AES_Cipher.decrypt(self.encrypted_txt)
-        self.text_input.setPlainText(bytestring_to_string(self.mytext)) 
+        encrypted_txt = self.text_output.toPlainText()
+        mytext = self.AES_Cipher.decrypt(encrypted_txt)
+        self.text_input.setPlainText(bytestring_to_string(mytext)) 
 
 
 
