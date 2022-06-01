@@ -30,6 +30,12 @@ if __name__ == '__main__':
     decr = rsa.decrypt(encr)
     print(decr)
 
+    # def aes_encrypt(input):
+    #     key = AESKeyGeneration()
+    #     key.key_generate()
+    #     crypto_key = key.get_key()
+
+
 
     # #AES key generation
     key = AESKeyGeneration()

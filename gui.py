@@ -1,7 +1,8 @@
 from PyQt5.QtWidgets import *
 from PyQt5 import QtGui
 import sys
-from Cryptography import AES_Cipher
+from Cryptography import *
+from KeyGeneration import *
 
 
 class MainWindow(QWidget):
@@ -10,6 +11,8 @@ class MainWindow(QWidget):
         self.initUI()
         self.filename = ""
         self.setAcceptDrops(True)
+        self.AES_Key = AESKeyGeneration()
+        self.AES_Cipher = AES_Cipher(self.AES_Key.get_key(), self.AES_Key.get_key())
 
     def initUI(self):
 
@@ -61,16 +64,16 @@ class MainWindow(QWidget):
 
 
     def submit(self):
-        mytext = self.text_input.toPlainText()
-        print(mytext)
+        self.mytext = self.text_input.toPlainText()
+        print(self.mytext)
 
     #------------EVENTS-----------------------------------------------------#
 
     def encrypt_event(self):
         if self.rsa_option.isChecked():
             pass
-        else:
-            pass
+        elif self.rsa_option.isChecked():
+            self.AES_Cipher.encrypt()
 
 
     def decrypt_event(self):
