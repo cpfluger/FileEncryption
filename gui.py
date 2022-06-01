@@ -30,6 +30,7 @@ class MainWindow(QWidget):
 
         encrypt_btn = QPushButton("Encrypt", self)
         encrypt_btn.move(330,120)
+        encrypt_btn.clicked.connect(self.submit)
         encrypt_btn.clicked.connect(self.encrypt_event)
 
         decrypt_btn = QPushButton("Decrypt", self)
@@ -41,12 +42,12 @@ class MainWindow(QWidget):
         browse_btn.clicked.connect(self.browsefiles)
 
         self.text_input = QPlainTextEdit(self)
-        self.text_input.setGeometry(20, 80, 260, 101)
+        self.text_input.setGeometry(20, 80, 260, 40)
         self.text_input.setPlaceholderText("Input your text here...")
 
-        self.text_submit = QPushButton("Submit", self)
-        self.text_submit.move(200, 190)
-        self.text_submit.clicked.connect(self.submit)
+        self.text_output = QPlainTextEdit(self)
+        self.text_output.setGeometry(20, 130, 260, 40)
+        self.text_output.setPlaceholderText("Your decrypted text will spawn here...")
 
         self.rsa_option = QRadioButton("RSA", self)
         self.rsa_option.move(330, 50)
@@ -69,7 +70,9 @@ class MainWindow(QWidget):
 
     def submit(self):
         self.mytext = self.text_input.toPlainText()
+        self.text_output.setPlainText(self.mytext)
         print(self.mytext)
+
 
     #------------EVENTS-----------------------------------------------------#
 
@@ -91,7 +94,7 @@ class MainWindow(QWidget):
 
     def AES_encrypt(self):
         print(self.mytext)
-        aes_enc = self.AES_Cipher.encrypt(string_to_bytestring(self.mytext))
+        self.aes_enc = self.AES_Cipher.encrypt(string_to_bytestring(self.mytext))
         print(aes_enc)  
 
     def AES_decrypt(self):
