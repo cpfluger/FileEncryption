@@ -31,7 +31,6 @@ if __name__ == '__main__':
     print(decr)
 
 
-
     # #AES key generation
     key = AESKeyGeneration()
     key.key_generate()
@@ -42,6 +41,7 @@ if __name__ == '__main__':
     print(aes_encr)
     aes_decr = aes.decrypt(aes_encr)
     print(aes_decr)
+
 
 
 

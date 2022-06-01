@@ -20,19 +20,23 @@ class MainWindow(QWidget):
         header.setFont(font_header)
 
 
-        encrypt_btn = QPushButton("Encrypt Button", self)
+        encrypt_btn = QPushButton("Encrypt", self)
         encrypt_btn.move(330,50)
 
-        decrypt_btn = QPushButton("Decrypt Button", self)
+        decrypt_btn = QPushButton("Decrypt", self)
         decrypt_btn.move(330,150)
 
         browse_btn = QPushButton("Browse...", self)
         browse_btn.move(30, 180)
         browse_btn.clicked.connect(self.browsefiles)
 
-        text_input = QPlainTextEdit(self)
-        text_input.setGeometry(30, 60, 260, 101)
+        self.text_input = QPlainTextEdit(self)
+        self.text_input.setGeometry(30, 60, 260, 101)
+        self.text_input.setPlaceholderText("Input your text here...")
 
+        self.text_submit = QPushButton("Submit", self)
+        self.text_submit.move(210, 170)
+        self.text_submit.clicked.connect(self.submit)
 
 
         self.setWindowTitle("RSA-Encryption")
@@ -41,23 +45,18 @@ class MainWindow(QWidget):
         self.show()
 
 
-
     def browsefiles(self):
         self.temp_path = QFileDialog.getOpenFileName(self, "Open File")
         print(self.temp_path[0])
 
-    def dragEnterEvent(self, event):
-        if event.mimeData().hasUrls():
-            event.accept()
-        else:
-            event.ignore()
+
+    def submit(self):
+        mytext = self.text_input.toPlainText()
+        print(mytext)
+
+
+ 
     
-    def dropEvent(self, event):
-        files = [u.toLocalFile() for u in event.mimeData().urls()]
-        for f in files:
-            print(f)
-
-
 
 app = QApplication(sys.argv)
 w = MainWindow()
