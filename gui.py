@@ -39,7 +39,6 @@ class MainWindow(QWidget):
         decrypt_btn = QPushButton("Decrypt", self)
         decrypt_btn.move(330,150)
         decrypt_btn.clicked.connect(self.decrypt_event)
-        decrypt_btn.clicked.connect(self.submit_decrypt)
 
         browse_btn = QPushButton("Browse...", self)
         browse_btn.move(30, 190)
@@ -76,11 +75,6 @@ class MainWindow(QWidget):
         self.mytext = self.text_input.toPlainText()
 
 
-    
-    def submit_decrypt(self):
-        # self.text_output.setPlainText(str(self.encrypted_txt)) 
-        # print(self.encrypted_txt)    
-        pass
     #---------------------------------EVENTS-------------------------------------------#
 
     def encrypt_event(self):
