@@ -56,8 +56,8 @@ class AES_Cipher(Cryptography):
         super().__init__(public_key, private_key)
 
 
-    def encrypt(self, byte_array):
-        self.__input = byte_array
+    def encrypt(self, byte_string):
+        self.__input = byte_string
         self.__tmp_array = []           
         self.__cipher = AES.new(self._public_key, AES.MODE_GCM)             
         self.__ciphertext = self.__cipher.encrypt(self.__input)
@@ -66,8 +66,8 @@ class AES_Cipher(Cryptography):
         return self.__ciphertext
 
 
-    def decrypt(self, byte_array):
-        self.__input = byte_array
+    def decrypt(self, byte_string):
+        self.__input = byte_string
         self.__plaincipher = AES.new(self._public_key, AES.MODE_GCM, self.__tmp_array[0])
         self.__plaintext = self.__plaincipher.decrypt(self.__tmp_array[1])
         return self.__plaintext
