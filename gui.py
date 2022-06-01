@@ -8,6 +8,7 @@ class MainWindow(QWidget):
         super().__init__()
         self.initUI()
         self.filename = ""
+        self.setAcceptDrops(True)
 
     def initUI(self):
 
@@ -29,14 +30,32 @@ class MainWindow(QWidget):
         browse_btn.move(30, 180)
         browse_btn.clicked.connect(self.browsefiles)
 
+        text_input = QPlainTextEdit(self)
+        text_input.setGeometry(30, 60, 260, 101)
+
+
+
         self.setWindowTitle("RSA-Encryption")
         self.setMinimumSize(520, 250)
         self.setMaximumSize(520, 250)
         self.show()
 
+
+
     def browsefiles(self):
         self.temp_path = QFileDialog.getOpenFileName(self, "Open File")
         print(self.temp_path[0])
+
+    def dragEnterEvent(self, event):
+        if event.mimeData().hasUrls():
+            event.accept()
+        else:
+            event.ignore()
+    
+    def dropEvent(self, event):
+        files = [u.toLocalFile() for u in event.mimeData().urls()]
+        for f in files:
+            print(f)
 
 
 
