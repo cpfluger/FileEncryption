@@ -7,6 +7,8 @@ from Conversion import *
 
 
 class MainWindow(QWidget):
+
+
     def __init__(self):
         super().__init__()
         self.initUI()
@@ -17,6 +19,7 @@ class MainWindow(QWidget):
         self.AES_Key = AESKeyGeneration()
         self.AES_Key.key_generate()
         self.AES_Cipher = AES_Cipher(self.AES_Key.get_key(), self.AES_Key.get_key())
+
 
     def initUI(self):
 
@@ -71,7 +74,7 @@ class MainWindow(QWidget):
         self.mytext = self.text_input.toPlainText()
         print(self.mytext)
 
-    #------------EVENTS-----------------------------------------------------#
+    #---------------------------------EVENTS-------------------------------------------#
 
     def encrypt_event(self):
         if self.rsa_option.isChecked():
@@ -85,20 +88,21 @@ class MainWindow(QWidget):
         elif self.aes_option.isChecked():
             self.AES_decrypt()
 
-
-
-    
-
+    #--------------------------------Encrypt & Decrypt---------------------------------#  
+      
     def AES_encrypt(self):
-        print(self.mytext)
-        aes_enc = self.AES_Cipher.encrypt(string_to_bytestring(self.mytext))
-        print(aes_enc)  
+        self.aes_enc = self.AES_Cipher.encrypt(string_to_bytestring(self.mytext))
+        print(self.aes_enc)
+
 
     def AES_decrypt(self):
-        print("aes_decrypt")
+        self.aes_dec = self.AES_Cipher.decrypt(self.aes_enc)
+        print(bytestring_to_string(self.aes_dec))
+
 
     def RSA_encrypt(self):
         print("RSA_encrypt")
+
 
     def RSA_decrypt(self):
         print("RSA_decrypt")
