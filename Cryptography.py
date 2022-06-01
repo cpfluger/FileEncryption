@@ -55,10 +55,9 @@ class AES_Cipher(Cryptography):
     def __int__(self, public_key, private_key):
         super().__init__(public_key, private_key)
 
-
     def encrypt(self, byte_string):
         self.__input = byte_string
-        self.__tmp_array = []           
+        self.__tmp_array = []      
         self.__cipher = AES.new(self._public_key, AES.MODE_GCM)             
         self.__ciphertext = self.__cipher.encrypt(self.__input)
         self.__tmp_array.append(self.__cipher.nonce)

@@ -33,7 +33,7 @@ class MainWindow(QWidget):
 
         encrypt_btn = QPushButton("Encrypt", self)
         encrypt_btn.move(330,120)
-        encrypt_btn.clicked.connect(self.submit_encrypt)
+        # encrypt_btn.clicked.connect(self.submit_encrypt)
         encrypt_btn.clicked.connect(self.encrypt_event)
 
         decrypt_btn = QPushButton("Decrypt", self)
@@ -71,8 +71,8 @@ class MainWindow(QWidget):
         print(self.temp_path[0])
 
 
-    def submit_encrypt(self):
-        self.mytext = self.text_input.toPlainText()
+    # def submit_encrypt(self):
+    #     self.mytext = self.text_input.toPlainText()
 
 
     #---------------------------------EVENTS-------------------------------------------#
@@ -92,11 +92,13 @@ class MainWindow(QWidget):
     #--------------------------------Encrypt & Decrypt---------------------------------#  
       
     def AES_encrypt(self):
+        self.mytext = self.text_input.toPlainText()
         self.encrypted_txt = self.AES_Cipher.encrypt(string_to_bytestring(self.mytext))
         self.text_output.setPlainText(str(self.encrypted_txt)) 
 
 
     def AES_decrypt(self):
+        self.encrypted_txt = self.text_output.toPlainText()
         self.mytext = self.AES_Cipher.decrypt(self.encrypted_txt)
         self.text_input.setPlainText(bytestring_to_string(self.mytext)) 
 
