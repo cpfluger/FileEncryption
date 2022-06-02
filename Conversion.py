@@ -21,5 +21,5 @@ def string_to_bytestring(string_input):
 
 
 def bytestring_to_string(bystestring_input):
-    string = bystestring_input.decode('utf_8')
+    string = bystestring_input.decode('latin-1')
     return string

@@ -60,17 +60,24 @@ class AES_Cipher(Cryptography):
         input = byte_string
         self.__tmp_array = []      
         self.__cipher = AES.new(self._public_key, AES.MODE_GCM)             
-        self.__ciphertext = self.__cipher.encrypt(input)
+        ciphertext = self.__cipher.encrypt(input)
         self.__tmp_array.append(self.__cipher.nonce)
-        self.__tmp_array.append(self.__ciphertext)
-        print(len(self.__cipher.nonce))
-        return self.__ciphertext
+        self.__tmp_array.append(ciphertext)
+
+        # sussy = b"".join([self.__tmp_array[0] , self.__tmp_array[1]])
+        # print(len(self.__cipher.nonce)) 
+        # print("ciphertext: " , self.__ciphertext)
+        # print("nonce:" , self.__cipher.nonce)
+        # output_len = len(self.__cipher.nonce)
+        # print("ciphertext but as weird shit: " , sussy[output_len:])
+
+        return b"".join([self.__tmp_array[0] , self.__tmp_array[1]])
 
 
-
-    def decrypt(self, byte_string):
-        self.__input = byte_string
-        self.__plaincipher = AES.new(self._public_key, AES.MODE_GCM, self.__tmp_array[0])
+    def decrypt(self, bytestring):
+        self.bytestring = bytestring
+        print(type(self.bytestring))
+        self.__plaincipher = AES.new(self._public_key, AES.MODE_GCM,self.__tmp_array[0])
         self.__plaintext = self.__plaincipher.decrypt(self.__tmp_array[1])
         return self.__plaintext
 

@@ -1,7 +1,7 @@
 from PyQt5.QtWidgets import *
 from PyQt5 import QtGui
 import sys
-from Cryptography import *
+from Cryptography import AES_Cipher
 from KeyGeneration import *
 from Conversion import *
 
@@ -98,8 +98,9 @@ class MainWindow(QWidget):
 
 
     def AES_decrypt(self):
-        encrypted_txt = self.text_output.toPlainText()
-        mytext = self.AES_Cipher.decrypt(encrypted_txt)
+        self.encrypted_txt = self.text_output.toPlainText()
+        print("tmp_01: ", type(self.encrypted_txt))
+        mytext = self.AES_Cipher.decrypt(self.encrypted_txt)
         self.text_input.setPlainText(bytestring_to_string(mytext)) 
 
 
