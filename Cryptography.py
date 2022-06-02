@@ -1,6 +1,7 @@
 from random import randint
 from Models import RSAKeyModel
 from Cryptodome.Cipher import AES
+from KeyGeneration import *
 
 class Cryptography():
 
@@ -56,13 +57,15 @@ class AES_Cipher(Cryptography):
         super().__init__(public_key, private_key)
 
     def encrypt(self, byte_string):
-        self.__input = byte_string
+        input = byte_string
         self.__tmp_array = []      
         self.__cipher = AES.new(self._public_key, AES.MODE_GCM)             
-        self.__ciphertext = self.__cipher.encrypt(self.__input)
+        self.__ciphertext = self.__cipher.encrypt(input)
         self.__tmp_array.append(self.__cipher.nonce)
         self.__tmp_array.append(self.__ciphertext)
+        print(len(self.__cipher.nonce))
         return self.__ciphertext
+
 
 
     def decrypt(self, byte_string):
