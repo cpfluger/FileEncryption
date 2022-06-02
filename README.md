@@ -170,9 +170,9 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Pfluger Clemens (Repository Admin) - [@cpfluger]() - cpfluger@tsn.at
-Unterberger Lorenz (Contributor)  - [@MrLolo9]() - lounterberger@tsn.at
-Unterholzner Elias (Contributor) - [@ParadoxParadise]() - eunterholzner@tsn.at
+Pfluger Clemens (Repository Admin) - [@cpfluger]() - cpfluger@tsn.at <br>
+Unterberger Lorenz (Contributor)  - [@MrLolo9]() - lounterberger@tsn.at <br>
+Unterholzner Elias (Contributor) - [@ParadoxParadise]() - eunterholzner@tsn.at <br>
 
 Project Link: [https://github.com/cpfluger/RSA-FileEncryption](https://github.com/cpfluger/RSA-FileEncryption)
 
