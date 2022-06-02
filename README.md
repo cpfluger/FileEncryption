@@ -33,14 +33,14 @@
   <p align="center">
     Welcome to our project! We are constantly trying to improve this project. So please download the repository and send us feedback!
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/cpfluger/RSA-FileEncryption"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>
+    <a href="https://github.com/cpfluger/RSA-FileEncryption">View Demo</a>
     ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Report Bug</a>
+    <a href="https://github.com/cpfluger/RSA-FileEncryption/issues">Report Bug</a>
     ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Request Feature</a>
+    <a href="https://github.com/cpfluger/RSA-FileEncryption/issues">Request Feature</a>
   </p>
 </div>
 
