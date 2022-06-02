@@ -68,6 +68,7 @@ class AESKeyGeneration(KeyGenerator):
         self.__password = None
         self.__salt = None
         self.__crypto_key = None
+        # self.__tmp_array = []
 
     def key_generate(self):
         self.__password = get_random_bytes(16)
