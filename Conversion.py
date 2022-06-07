@@ -1,3 +1,7 @@
+
+
+
+
 def ascii_string_to_decimal(ascii_string):
     decimal_array = []
 
@@ -16,7 +20,7 @@ def decimal_array_to__ascii_string(decimal_array):
 
 
 def string_to_bytestring(string_input):
-    bytestring = bytes(string_input, 'utf_8')
+    bytestring = bytes(string_input, 'latin-1')
     return bytestring
 
 

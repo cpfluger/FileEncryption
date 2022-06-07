@@ -92,15 +92,16 @@ class MainWindow(QWidget):
     #--------------------------------Encrypt & Decrypt---------------------------------#  
       
     def AES_encrypt(self):
-        mytext = self.text_input.toPlainText()                                      #get input from input feld
-        encrypted_txt = self.AES_Cipher.encrypt(string_to_bytestring(mytext))       #encrypt the converted input text
-        self.text_output.setPlainText(str(encrypted_txt))                           #put enc text into output feld
+
+        inputtext = self.text_input.toPlainText()                                           #get input from input field
+        encrypted_input = self.AES_Cipher.encrypt(string_to_bytestring(inputtext))          #encrypt the converted input text
+        self.text_output.setPlainText(bytestring_to_string(encrypted_input))                #stringing the bytestring to make it possible to put it inot the qplaintextedit
 
 
     def AES_decrypt(self):
-        self.encrypted_txt = self.text_output.toPlainText()
-        print("tmp_01: ", type(self.encrypted_txt))
-        mytext = self.AES_Cipher.decrypt(self.encrypted_txt)
+
+        encrypted_txt = self.text_output.toPlainText()                                      #write output to field  output = string b'\xFF'
+        mytext = self.AES_Cipher.decrypt(string_to_bytestring(encrypted_txt))
         self.text_input.setPlainText(bytestring_to_string(mytext)) 
 
 
