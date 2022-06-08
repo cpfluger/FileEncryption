@@ -34,12 +34,12 @@ class MainWindow(QWidget):
 
 
         encrypt_btn = QPushButton("Encrypt", self)
-        encrypt_btn.move(330,120)
+        encrypt_btn.move(330,100)
         # encrypt_btn.clicked.connect(self.submit_encrypt)
         encrypt_btn.clicked.connect(self.encrypt_event)
 
         decrypt_btn = QPushButton("Decrypt", self)
-        decrypt_btn.move(330,150)
+        decrypt_btn.move(330,130)
         decrypt_btn.clicked.connect(self.decrypt_event)
 
         browse_btn = QPushButton("Browse...", self)
@@ -60,6 +60,14 @@ class MainWindow(QWidget):
 
         self.aes_option = QRadioButton("AES", self)
         self.aes_option.move(330, 70)
+
+        self.key_input = QTextEdit(self)
+        self.key_input.setGeometry(330, 160, 180, 30)
+        self.key_input.setPlaceholderText("Input your key")
+
+        self.key_output = QTextEdit(self)
+        self.key_output.setGeometry(330, 200, 180, 30)
+        self.key_output.setPlaceholderText("Your Key")
 
 
         self.setWindowTitle("RSA-Encryption")
