@@ -37,16 +37,16 @@ if __name__ == '__main__':
 
 
 
-    # #AES key generation
-    key = AESKeyGeneration()
-    key.key_generate()
-    crypto_key = key.get_key()
+    # # #AES key generation
+    # key = AESKeyGeneration()
+    # key.key_generate()
+    # crypto_key = key.get_key()
 
-    aes = AES_Cipher(crypto_key, crypto_key)
-    aes_encr = aes.encrypt(b'ich bin ein plaintext')
-    print(aes_encr)
-    aes_decr = aes.decrypt(aes_encr)
-    print(aes_decr)
+    # aes = AES_Cipher(crypto_key, crypto_key)
+    # aes_encr = aes.encrypt(b'ich bin ein plaintext')
+    # print(aes_encr)
+    # aes_decr = aes.decrypt(aes_encr)
+    # print(aes_decr)
 
 
 
