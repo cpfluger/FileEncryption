@@ -18,9 +18,9 @@ class MainWindow(QWidget):
         self.setAcceptDrops(True)
 
         #AES-Stuff
-        self.AES_Key = AESKeyGeneration()
-        self.AES_Key.key_generate()
-        self.AES_Cipher = AES_Cipher(self.AES_Key.get_key(), self.AES_Key.get_key())
+        # self.AES_Key = AESKeyGeneration()
+        # self.AES_Key.key_generate()
+        # self.AES_Cipher = AES_Cipher(self.AES_Key.get_key(), self.AES_Key.get_key())
 
 
     def initUI(self):
@@ -65,9 +65,9 @@ class MainWindow(QWidget):
         self.key_input.setGeometry(330, 160, 180, 30)
         self.key_input.setPlaceholderText("Input your key")
 
-        self.key_output = QTextEdit(self)
-        self.key_output.setGeometry(330, 200, 180, 30)
-        self.key_output.setPlaceholderText("Your Key")
+        # self.key_output = QTextEdit(self)
+        # self.key_output.setGeometry(330, 200, 180, 30)
+        # self.key_output.setPlaceholderText("Your Key")
 
 
         self.setWindowTitle("RSA-Encryption")
@@ -103,12 +103,18 @@ class MainWindow(QWidget):
       
     def AES_encrypt(self):
         
+        self.check_key_status()
+
+        self.key_input.setPlainText(bytestring_to_string(self.aes_key))
+
         inputtext = self.text_input.toPlainText()                                           #get input from input field
         encrypted_input = self.AES_Cipher.encrypt(string_to_bytestring(inputtext))          #encrypt the converted input text
         self.text_output.setPlainText(bytestring_to_string(encrypted_input))                #stringing the bytestring to make it possible to put it inot the qplaintextedit
 
 
     def AES_decrypt(self):
+
+        self.check_key_status()
 
         encrypted_txt = self.text_output.toPlainText()                                      #write output to field  output = string b'\xFF'
         mytext = self.AES_Cipher.decrypt(string_to_bytestring(encrypted_txt))
@@ -124,7 +130,27 @@ class MainWindow(QWidget):
         print("RSA_decrypt")
 
  
-    
+    #-----------------------------------------Key Operations-------------------------------------------#
+
+
+    def check_key_status(self):
+
+        if self.key_input.toPlainText() == "":
+            print("generating Key")
+            self.aes_key = AESKeyGeneration()
+            self.aes_key.key_generate()
+            self.aes_key = self.aes_key.get_key()
+            self.AES_Cipher = AES_Cipher(self.aes_key, self.aes_key)
+
+        else:
+            print("taking your key")
+            self.aes_key = string_to_bytestring( self.key_input.toPlainText() )
+            self.AES_Cipher = AES_Cipher(self.aes_key, self.aes_key)
+
+
+
+
+
 
 app = QApplication(sys.argv)
 w = MainWindow()
