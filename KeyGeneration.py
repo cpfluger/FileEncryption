@@ -59,21 +59,3 @@ class RSAKeyGenerator(KeyGenerator):
             prime_candidate = get_low_level_prime(number_of_bits)
             if is_miller_rabin_passed(prime_candidate):
                 return prime_candidate
-
-
-
-class AESKeyGeneration(KeyGenerator):
-    
-    def __int__(self):
-        self.__password = None
-        self.__salt = None
-        self.__crypto_key = None
-        # self.__tmp_array = []
-
-    def key_generate(self):
-        self.__password = get_random_bytes(16)
-        self.__salt = get_random_bytes(16)
-        self.__crypto_key = hashlib.scrypt(password = self.__password, salt = self.__salt, n=2**14, r=8, p=1, dklen=16)
-        
-    def get_key(self):
-        return self.__crypto_key
