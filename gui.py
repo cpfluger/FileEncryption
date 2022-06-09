@@ -1,16 +1,11 @@
 from PyQt5.QtWidgets import *
 from PyQt5 import QtGui
 import sys
-from Cryptography import AES_Cipher
-from KeyGeneration import *
 from Conversion import *
-
 from AES import AES_Cipher, AESKeyGeneration
 from RSA import *
-
 import qdarktheme
 #pip install pyqtdarktheme
-
 
 
 class MainWindow(QWidget):
