@@ -70,9 +70,9 @@ class MainWindow(QWidget):
         self.key_input.setGeometry(330, 160, 180, 30)
         self.key_input.setPlaceholderText("Input your key")
 
-        # self.key_output = QTextEdit(self)
-        # self.key_output.setGeometry(330, 200, 180, 30)
-        # self.key_output.setPlaceholderText("Your Key")
+        self.key_output = QTextEdit(self)
+        self.key_output.setGeometry(330, 200, 180, 30)
+        self.key_output.setPlaceholderText("Your Key")
 
 
         self.setWindowTitle("RSA-Encryption")
