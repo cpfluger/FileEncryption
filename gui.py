@@ -7,7 +7,8 @@ from Conversion import *
 
 from AES import AES_Cipher, AESKeyGeneration
 
-import pydarktheme
+import qdarktheme
+#pip install git+https://github.com/5yutan5/PyQtDarkTheme.git@main
 
 
 
@@ -34,6 +35,11 @@ class MainWindow(QWidget):
         font_header = QtGui.QFont()
         font_header.setPointSize(14)
         header.setFont(font_header)
+
+        self.darkmode_btn = QPushButton("Darkmode", self)
+        self.darkmode_btn.move(400, 10)
+        self.darkmode_btn.setCheckable(True)
+        self.darkmode_btn.clicked.connect(self.darkmode_event)
 
 
         encrypt_btn = QPushButton("Encrypt", self)
@@ -101,6 +107,12 @@ class MainWindow(QWidget):
             self.RSA_decrypt()
         elif self.aes_option.isChecked():
             self.AES_decrypt()
+    
+    def darkmode_event(self):
+        if self.darkmode_btn.isChecked():
+            app.setStyleSheet(qdarktheme.load_stylesheet())
+        else:
+            app.setStyleSheet('Windows')
 
     #--------------------------------Encrypt & Decrypt---------------------------------#  
       
