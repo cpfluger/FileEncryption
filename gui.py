@@ -7,6 +7,9 @@ from Conversion import *
 
 from AES import AES_Cipher, AESKeyGeneration
 
+import pydarktheme
+
+
 
 class MainWindow(QWidget):
 
