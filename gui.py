@@ -1,7 +1,6 @@
 from PyQt5.QtWidgets import *
 from PyQt5 import QtGui
 import sys
-
 from Conversion import *
 
 from AES import AES_Cipher, AESKeyGeneration
