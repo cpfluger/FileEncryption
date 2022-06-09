@@ -6,7 +6,7 @@ from Models import RSAKeyModel
 
 
 if __name__ == '__main__':
-    
+    print("gay")
     # #generating private and public RSA keys
     # obj = RSAKeyGenerator()
     # obj.load_generator(8)   #8bit prime numbers for key generation work pretty well, 128bit throws a "memory error" exception after long time calculating, please execute on pc with high ram ressources
