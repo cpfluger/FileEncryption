@@ -25,7 +25,7 @@ class MainWindow(QWidget):
 
     def initUI(self):
 
-        header = QLabel("Dateiverschlüsselung", self)
+        header = QLabel("FileEncryption", self)
         header.move(20,10)
         
         font_header = QtGui.QFont()
