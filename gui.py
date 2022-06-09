@@ -110,9 +110,9 @@ class MainWindow(QWidget):
     
     def darkmode_event(self):
         if self.darkmode_btn.isChecked():
-            app.setStyleSheet(qdarktheme.load_stylesheet())
-        else:
             app.setStyleSheet('Windows')
+        else:
+            app.setStyleSheet(qdarktheme.load_stylesheet())
 
     #--------------------------------Encrypt & Decrypt---------------------------------#  
       
@@ -168,5 +168,6 @@ class MainWindow(QWidget):
 
 
 app = QApplication(sys.argv)
+app.setStyleSheet(qdarktheme.load_stylesheet())
 w = MainWindow()
 sys.exit(app.exec_())
