@@ -36,24 +36,29 @@ class MainWindow(QWidget):
         self.darkmode_btn.move(400, 10)
         self.darkmode_btn.setCheckable(True)
         self.darkmode_btn.clicked.connect(self.darkmode_event)
+        self.darkmode_btn.setToolTip("Set Design to Darkmode")
 
 
         encrypt_btn = QPushButton("Encrypt", self)
         encrypt_btn.move(330,100)
         # encrypt_btn.clicked.connect(self.submit_encrypt)
         encrypt_btn.clicked.connect(self.encrypt_event)
+        encrypt_btn.setToolTip("Press Button to encrypt")
 
         decrypt_btn = QPushButton("Decrypt", self)
         decrypt_btn.move(330,130)
         decrypt_btn.clicked.connect(self.decrypt_event)
+        decrypt_btn.setToolTip("Press Button to decrypt")
 
         browse_btn = QPushButton("Browse...", self)
         browse_btn.move(30, 190)
         browse_btn.clicked.connect(self.browsefiles)
+        browse_btn.setToolTip("Open File Explorer")
 
         self.text_input = QPlainTextEdit(self)
         self.text_input.setGeometry(20, 80, 260, 40)
         self.text_input.setPlaceholderText("Input your text here...")
+        
 
         self.text_output = QPlainTextEdit(self)
         self.text_output.setGeometry(20, 130, 260, 40)
@@ -62,20 +67,24 @@ class MainWindow(QWidget):
         self.rsa_option = QRadioButton("RSA", self)
         self.rsa_option.move(330, 50)
         self.rsa_option.setChecked(True)
+        self.rsa_option.setToolTip("Choose RSA encryption")
 
         self.aes_option = QRadioButton("AES", self)
         self.aes_option.move(330, 70)
+        self.aes_option.setToolTip("Choose AES encryption")
 
         self.key_input = QTextEdit(self)
         self.key_input.setGeometry(330, 160, 180, 30)
         self.key_input.setPlaceholderText("Input your key")
+        self.text_input.setToolTip("Copy your key here")
 
         self.key_output = QTextEdit(self)
         self.key_output.setGeometry(330, 200, 180, 30)
         self.key_output.setPlaceholderText("Your Key")
 
 
-        self.setWindowTitle("RSA-Encryption")
+        self.setWindowTitle("FileEncryption")
+        self.setWindowIcon(QtGui.QIcon('images/icon.png'))
         self.setMinimumSize(520, 250)
         self.setMaximumSize(520, 250)
         self.show()
