@@ -96,6 +96,15 @@ You will have to install multiple librarys in order to execude the program:
   ```sh
   pip install PyQt5
   ```
+* Dark Theme
+  ```sh
+  pip install pyqtdarktheme
+  ```
+* Cryptography
+  ```sh
+  pip install Cryptography
+  ```
+
 
 
 
@@ -114,8 +123,7 @@ To encrypt files or your own written text in the container, you will have to ope
 
 - [x] Basic GUI
   - [ ] Drag & Drop function
-  - [ ] Dark-Mode
-
+  - [x] Dark-Mode
 - [x] AES implementation
 
 - [ ] RSA implementation
