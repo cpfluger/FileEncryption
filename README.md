@@ -64,7 +64,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+[![FileEncryption][product-screenshot]](https://github.com/cpfluger/FileEncryption#top)
 
 The goal is to develop a working program that encrypts a text file by reading it. The methods used are AES and RSA Encryption. For illustration purposes, the GUI was designed with PyQt. 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -187,4 +187,4 @@ Project Link: [https://github.com/cpfluger/RSA-FileEncryption](https://github.co
 [license-url]: https://github.com/cpfluger/RSA-FileEncryption/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/othneildrew
-[product-screenshot]: images/screenshot.png
+[product-screenshot]: images/icon.png
