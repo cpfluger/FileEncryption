@@ -8,7 +8,7 @@ from Conversion import *
 from AES import AES_Cipher, AESKeyGeneration
 
 import qdarktheme
-#pip install git+https://github.com/5yutan5/PyQtDarkTheme.git@main
+#pip install pyqtdarktheme
 
 
 
