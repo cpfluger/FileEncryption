@@ -13,18 +13,26 @@ class RSA(Cryptography):
 
     def encrypt(self, clear_text_decimal_array):
         encrypted_text_decimal_array = []
+        x = 0
 
         for element in clear_text_decimal_array:
-            encrypted_text_decimal_array.append((element ** self._public_key.get_key_specific_number()) % self._public_key.get_prime_number_product())
-            print(encrypted_text_decimal_array)
+            x = element
+            for i in range(2, self._public_key.get_key_specific_number() + 1):
+                x = (x * x) % self._public_key.get_prime_number_product()
+                print(x)
+            encrypted_text_decimal_array.append(x)
         return encrypted_text_decimal_array
 
 
     def decrypt(self, encrypted_text_decimal_array):
         clear_text_decimal_array = []
+        x = 0
 
         for element in encrypted_text_decimal_array:
-            clear_text_decimal_array.append((element ** self._private_key.get_key_specific_number()) % self._private_key.get_prime_number_product())
+            x = element
+            for i in range(2, self._private_key.get_key_specific_number() + 1):
+                x = (x * x) % self._private_key.get_prime_number_product()
+            clear_text_decimal_array.append(x)
         return clear_text_decimal_array
 
 

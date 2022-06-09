@@ -2,12 +2,10 @@ from PyQt5.QtWidgets import *
 from PyQt5 import QtGui
 import sys
 from Conversion import *
-
 from AES import AES_Cipher, AESKeyGeneration
-
+from RSA import *
 import qdarktheme
 #pip install pyqtdarktheme
-
 
 
 class MainWindow(QWidget):
@@ -108,9 +106,9 @@ class MainWindow(QWidget):
     
     def darkmode_event(self):
         if self.darkmode_btn.isChecked():
-            app.setStyleSheet('Windows')
-        else:
             app.setStyleSheet(qdarktheme.load_stylesheet())
+        else:
+            app.setStyleSheet('Windows')
 
     #--------------------------------Encrypt & Decrypt---------------------------------#  
       
@@ -119,7 +117,7 @@ class MainWindow(QWidget):
         self.check_key_status()
 
         self.key_input.setPlainText(bytestring_to_string(self.aes_key))
-        
+
         inputtext = self.text_input.toPlainText()                                           #get input from input field
         encrypted_input = self.AES_Cipher.encrypt(string_to_bytestring(inputtext))          #encrypt the converted input text
         self.text_output.setPlainText(bytestring_to_string(encrypted_input))                #stringing the bytestring to make it possible to put it inot the qplaintextedit
@@ -166,6 +164,5 @@ class MainWindow(QWidget):
 
 
 app = QApplication(sys.argv)
-app.setStyleSheet(qdarktheme.load_stylesheet())
 w = MainWindow()
 sys.exit(app.exec_())
