@@ -7,6 +7,9 @@ class Cryptography():
         self._private_key = private_key
 
 
+    def encrypt(self, byte_array):
+        pass
+
     def get_public_key(self):
         return self._public_key
 

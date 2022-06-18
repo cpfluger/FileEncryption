@@ -1,7 +1,3 @@
-
-
-
-
 def ascii_string_to_decimal(ascii_string):
     decimal_array = []
 
