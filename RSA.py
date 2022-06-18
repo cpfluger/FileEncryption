@@ -13,28 +13,52 @@ class RSA(Cryptography):
 
     def encrypt(self, clear_text_decimal_array):
         encrypted_text_decimal_array = []
-        x = 0
 
         for element in clear_text_decimal_array:
-            x = element
-            for i in range(2, self._public_key.get_key_specific_number() + 1):
-                x = (x * x) % self._public_key.get_prime_number_product()
-                print(x)
-            encrypted_text_decimal_array.append(x)
+
+            modulus = self._public_key.get_prime_number_product()
+            exp = self._public_key.get_key_specific_number()
+            result = 1
+            base = element
+            base = base % modulus
+
+            if (base == 0):
+                encrypted_text_decimal_array.append(0)
+
+            while(exp > 0):
+                if (exp & 1):
+                    result = (result*base) % modulus
+                exp = exp >> 1
+                base = (base * base) % modulus
+
+            encrypted_text_decimal_array.append(result)
+
         return encrypted_text_decimal_array
 
 
     def decrypt(self, encrypted_text_decimal_array):
         clear_text_decimal_array = []
-        x = 0
 
         for element in encrypted_text_decimal_array:
-            x = element
-            for i in range(2, self._private_key.get_key_specific_number() + 1):
-                x = (x * x) % self._private_key.get_prime_number_product()
-            clear_text_decimal_array.append(x)
-        return clear_text_decimal_array
 
+            modulus = self._private_key.get_prime_number_product()
+            exp = self._private_key.get_key_specific_number()
+            result = 1
+            base = element
+            base = base % modulus
+
+            if (base == 0):
+                encrypted_text_decimal_array.append(0)
+
+            while (exp > 0):
+                if (exp & 1):
+                    result = (result * base) % modulus
+                exp = exp >> 1
+                base = (base * base) % modulus
+
+            clear_text_decimal_array.append(result)
+
+        return  clear_text_decimal_array
 
 class RSAKeyGenerator(KeyGenerator):
 
@@ -65,7 +89,7 @@ class RSAKeyGenerator(KeyGenerator):
 
 
     def generate_encryption_number(self):
-        potential_encryption_number = self.__eulers_totient_z - 1000
+        potential_encryption_number = self.__eulers_totient_z - self.create_prime_number(8)
 
         while not is_relatively_prime_to(self.__eulers_totient_z, potential_encryption_number):
             potential_encryption_number = potential_encryption_number - 1
