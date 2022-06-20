@@ -120,18 +120,20 @@ class MainWindow(QWidget):
     #--------------------------------Encrypt & Decrypt---------------------------------#  
       
     def AES_encrypt(self):
+        
         self.check_key_status()
-        self.key_input.setPlainText(bytestring_to_string(self.aes_key))
+
+        self.key_input.setPlainText(byte_string_to_hex_string(self.aes_working_key))
 
         inputtext = self.text_input.toPlainText()                                           #get input from input field
-        encrypted_input = self.AES_Cipher.encrypt(string_to_bytestring(inputtext))          #encrypt the converted input text
-        self.text_output.setPlainText(bytestring_to_string(encrypted_input))                #stringing the bytestring to make it possible to put it inot the qplaintextedit
+        encrypted_input = self.AES_Cipher.encrypt(hex_string_to_byte_string(inputtext))          #encrypt the converted input text
+        self.text_output.setPlainText(byte_string_to_hex_string(encrypted_input))                #stringing the bytestring to make it possible to put it inot the qplaintextedit
 
 
     def AES_decrypt(self):
         encrypted_txt = self.text_output.toPlainText()                                      #write output to field  output = string b'\xFF'
-        mytext = self.AES_Cipher.decrypt(string_to_bytestring(encrypted_txt))
-        self.text_input.setPlainText(bytestring_to_string(mytext))
+        mytext = self.AES_Cipher.decrypt(hex_string_to_byte_string(encrypted_txt))
+        self.text_input.setPlainText(byte_string_to_hex_string(mytext))
 
 
     def RSA_encrypt(self):
@@ -149,18 +151,20 @@ class MainWindow(QWidget):
     #-----------------------------------------Key Operations-------------------------------------------#
 
 
+ 
     def check_key_status(self):
 
         if self.key_input.toPlainText() == "":
             print("generating Key")
             self.aes_key = AESKeyGeneration()
             self.aes_key.key_generate()
-            self.AES_Cipher = AES_Cipher(self.aes_key.get_key(), self.aes_key.get_key())
+            self.aes_working_key = self.aes_key.get_key()
+            self.AES_Cipher = AES_Cipher(self.aes_working_key, self.aes_working_key)
 
         else:
             print("taking your key")
-            self.aes_key = string_to_bytestring(self.key_input.toPlainText())
-            self.AES_Cipher = AES_Cipher(self.aes_key, self.aes_key)
+            self.aes_working_key = hex_string_to_byte_string( self.key_input.toPlainText())
+            self.AES_Cipher = AES_Cipher(self.aes_working_key, self.aes_working_key)
 
 
     def check_key_rsa(self):
