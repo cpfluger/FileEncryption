@@ -122,18 +122,19 @@ class MainWindow(QWidget):
     def AES_encrypt(self):
         
         self.check_key_status()
-
         self.key_input.setPlainText(byte_string_to_hex_string(self.aes_working_key))
 
-        inputtext = self.text_input.toPlainText()                                           #get input from input field
-        encrypted_input = self.AES_Cipher.encrypt(hex_string_to_byte_string(inputtext))          #encrypt the converted input text
+        inputtext = self.text_input.toPlainText()                                         #get input from input field
+        encrypted_input = self.AES_Cipher.encrypt(string_to_bytestring(inputtext))               #encrypt the converted input text
         self.text_output.setPlainText(byte_string_to_hex_string(encrypted_input))                #stringing the bytestring to make it possible to put it inot the qplaintextedit
 
 
     def AES_decrypt(self):
+
+        self.check_key_status()
         encrypted_txt = self.text_output.toPlainText()                                      #write output to field  output = string b'\xFF'
         mytext = self.AES_Cipher.decrypt(hex_string_to_byte_string(encrypted_txt))
-        self.text_input.setPlainText(byte_string_to_hex_string(mytext))
+        self.text_input.setPlainText(bytestring_to_string(mytext))
 
 
     def RSA_encrypt(self):

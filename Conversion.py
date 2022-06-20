@@ -47,7 +47,7 @@ def hex_string_to_decimal_array(hex_string):
 
 def string_to_bytestring(string_input):
     bytestring = bytes(string_input, 'latin-1')
-    return str(bytestring)
+    return bytestring
 
 
 def bytestring_to_string(bystestring_input):
