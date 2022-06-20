@@ -76,6 +76,7 @@ class RSAKeyGenerator(KeyGenerator):
         self.__prime_number_q = self.create_prime_number(key_length_bit)
         self.__product_number_n = self.__prime_number_p * self.__prime_number_q
         self.__eulers_totient_z = (self.__prime_number_p - 1) * (self.__prime_number_q - 1)
+        print(self.__eulers_totient_z)
         self.generate_encryption_number()
         self.generate_decryption_number()
 
