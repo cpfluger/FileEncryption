@@ -37,11 +37,12 @@ def decimal_array_to_hex_string(decimal_array):
 
 
 def hex_string_to_decimal_array(hex_string):
+    dec_array = []
     hex_array = hex_string.split("0x")
     hex_array.pop(0)
     for c in hex_array:
-        c = hex(int(c, 16))
-    return hex_array
+        dec_array.append(int(c, 16))
+    return dec_array
 
 
 def string_to_bytestring(string_input):
