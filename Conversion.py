@@ -53,3 +53,16 @@ def string_to_bytestring(string_input):
 def bytestring_to_string(bystestring_input):
     string = bystestring_input.decode('latin-1')
     return string
+
+
+def byte_string_to_hex_string(bytestring_input):
+    byte_list = list(bytestring_input)
+    hex_string_as_list = [hex(c) for c in byte_list]
+    return "".join(hex_string_as_list)
+
+
+def hex_string_to_byte_string(hex_string):
+    hex_string = hex_string[2:]
+    splitted_hex_string = hex_string.split("0x")
+    decimal_list = [int(c, 16) for c in splitted_hex_string]
+    return bytes(decimal_list)
