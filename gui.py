@@ -1,11 +1,10 @@
+import Conversion
 from PyQt5.QtWidgets import *
 from PyQt5 import QtGui
-import sys
 from Conversion import *
 from AES import AES_Cipher, AESKeyGeneration
 from RSA import *
 import qdarktheme
-#pip install pyqtdarktheme
 
 
 class MainWindow(QWidget):
@@ -16,11 +15,9 @@ class MainWindow(QWidget):
         self.initUI()
         self.filename = ""
         self.setAcceptDrops(True)
+        self.RSA = None
+        self.RSA_Key = None
 
-        #AES-Stuff
-        # self.AES_Key = AESKeyGeneration()
-        # self.AES_Key.key_generate()
-        # self.AES_Cipher = AES_Cipher(self.AES_Key.get_key(), self.AES_Key.get_key())
 
 
     def initUI(self):
@@ -95,14 +92,15 @@ class MainWindow(QWidget):
         print(self.temp_path[0])
 
 
-    # def submit_encrypt(self):
-    #     self.mytext = self.text_input.toPlainText()
+    def submit_encrypt(self):
+        self.mytext = self.text_input.toPlainText()
 
 
     #---------------------------------EVENTS-------------------------------------------#
 
     def encrypt_event(self):
         if self.rsa_option.isChecked():
+            self.check_key_rsa()
             self.RSA_encrypt()
         elif self.aes_option.isChecked():
             self.AES_encrypt()
@@ -122,9 +120,7 @@ class MainWindow(QWidget):
     #--------------------------------Encrypt & Decrypt---------------------------------#  
       
     def AES_encrypt(self):
-        
         self.check_key_status()
-
         self.key_input.setPlainText(bytestring_to_string(self.aes_key))
 
         inputtext = self.text_input.toPlainText()                                           #get input from input field
@@ -133,21 +129,21 @@ class MainWindow(QWidget):
 
 
     def AES_decrypt(self):
-
-        self.check_key_status()
-
         encrypted_txt = self.text_output.toPlainText()                                      #write output to field  output = string b'\xFF'
         mytext = self.AES_Cipher.decrypt(string_to_bytestring(encrypted_txt))
-        self.text_input.setPlainText(bytestring_to_string(mytext)) 
-
+        self.text_input.setPlainText(bytestring_to_string(mytext))
 
 
     def RSA_encrypt(self):
-        print("RSA_encrypt")
+        inputtext = self.text_input.toPlainText()
+        encrypted_input = self.RSA.encrypt(ascii_string_to_decimal(inputtext))
+        self.text_output.setPlainText(decimal_array_to_hex_string(encrypted_input))
 
 
     def RSA_decrypt(self):
-        print("RSA_decrypt")
+        encrypted_text = self.text_output.toPlainText()
+        decrypted_text = self.RSA.decrypt(hex_string_to_decimal_array(encrypted_text))
+        self.text_input.setPlainText(decimal_array_to__ascii_string(decrypted_text))
 
  
     #-----------------------------------------Key Operations-------------------------------------------#
@@ -159,16 +155,23 @@ class MainWindow(QWidget):
             print("generating Key")
             self.aes_key = AESKeyGeneration()
             self.aes_key.key_generate()
-            self.aes_key = self.aes_key.get_key()
-            self.AES_Cipher = AES_Cipher(self.aes_key, self.aes_key)
+            self.AES_Cipher = AES_Cipher(self.aes_key.get_key(), self.aes_key.get_key())
 
         else:
             print("taking your key")
-            self.aes_key = string_to_bytestring( self.key_input.toPlainText() )
+            self.aes_key = string_to_bytestring(self.key_input.toPlainText())
             self.AES_Cipher = AES_Cipher(self.aes_key, self.aes_key)
 
 
-app = QApplication(sys.argv)
-app.setStyleSheet(qdarktheme.load_stylesheet())
-w = MainWindow()
-sys.exit(app.exec_())
+    def check_key_rsa(self):
+        if self.key_input.toPlainText() == "":
+            print("generating Key")
+            self.RSA_Key = RSAKeyGenerator()
+            self.RSA_Key.load_generator(265)
+            self.RSA = RSA(self.RSA_Key.get_public_key(), self.RSA_Key.get_private_key())
+
+        elif "0x" in self.key_input.toPlainText() and "0x" in self.key_input.toPlainText():
+            print("taking your key")
+            self.RSA = RSA(123, 123) #temporary
+
+
