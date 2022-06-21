@@ -125,6 +125,10 @@ class MainWindow(QMainWindow, Drag_DropArea):
         self.input_file_name.setGeometry(30, 220, 260, 30)
         self.input_file_name.setText("")
 
+        self.generate_key_button = QPushButton("Generate Key", self)
+        self.generate_key_button.setGeometry(330, 240, 100, 30)
+        self.generate_key_button.clicked.connect(self.generate_key)
+
 
 
 
@@ -159,6 +163,9 @@ class MainWindow(QMainWindow, Drag_DropArea):
 
         else:
             app.setStyleSheet(qdarktheme.load_stylesheet())
+
+    def generate_key(self):
+        pass
 
 
     #--------------------------------Encrypt & Decrypt---------------------------------#  
@@ -198,6 +205,7 @@ class MainWindow(QMainWindow, Drag_DropArea):
         encrypted_text = self.text_output.toPlainText()
         decrypted_text = self.RSA.decrypt(hex_string_to_decimal_array(encrypted_text))
         self.text_input.setPlainText(decimal_array_to__ascii_string(decrypted_text))
+
 
  
     #-----------------------------------------Key Operations-------------------------------------------#
