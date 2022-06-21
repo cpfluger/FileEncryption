@@ -126,7 +126,7 @@ class MainWindow(QMainWindow, Drag_DropArea):
         self.input_file_name.setText("")
 
         self.generate_key_button = QPushButton("Generate Key", self)
-        self.generate_key_button.setGeometry(330, 240, 100, 30)
+        self.generate_key_button.setGeometry(330, 270, 100, 30)
         self.generate_key_button.clicked.connect(self.generate_key)
 
         self.error_box = QLabel("Error", self)
@@ -170,7 +170,8 @@ class MainWindow(QMainWindow, Drag_DropArea):
     def generate_key(self):
         pass
 
-    def erro_message(self, input):
+    def error_message(self, input):
+        self.error_box.setText("")
         self.error_box.setText(input)
 
 
