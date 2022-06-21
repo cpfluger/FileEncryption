@@ -80,6 +80,10 @@ class MainWindow(QWidget):
         self.key_output.setGeometry(330, 200, 180, 30)
         self.key_output.setPlaceholderText("Your Key")
 
+        self.input_file_name = QLabel(self)
+        self.input_file_name.setGeometry(30, 220, 260, 30)
+        self.input_file_name.setText("")
+
 
         self.setWindowTitle("FileEncryption")
         self.setWindowIcon(QtGui.QIcon('images/icon.png'))
@@ -91,6 +95,7 @@ class MainWindow(QWidget):
     def browsefiles(self):
         self.temp_path = QFileDialog.getOpenFileName(self, "Open File")
         print(self.temp_path[0])
+        self.input_file_name.setText(self.temp_path[0])
 
 
     def submit_encrypt(self):
