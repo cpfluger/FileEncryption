@@ -42,7 +42,7 @@ class Drag_DropArea(QListWidget):
             print(f)
 
 
-class MainWindow(QMainWindow):
+class MainWindow(QMainWindow, Drag_DropArea):
 
 
     def __init__(self):
@@ -155,9 +155,12 @@ class MainWindow(QMainWindow):
     def darkmode_event(self):
         if self.darkmode_btn.isChecked():
             app.setStyleSheet(qdarktheme.load_stylesheet("light"))
-            self.pixmap
+            self.pixmap = QPixmap('images/download1.png')
+            self.centerlabel.setPixmap(self.pixmap)
         else:
             app.setStyleSheet(qdarktheme.load_stylesheet())
+            self.pixmap = QPixmap('images/download2.png')
+            self.centerlabel.setPixmap(self.pixmap)
 
     #--------------------------------Encrypt & Decrypt---------------------------------#  
       
