@@ -1,5 +1,6 @@
 import Conversion
 from PyQt5.QtWidgets import *
+from PyQt5.QtGui import QPalette
 from PyQt5 import QtGui
 from Conversion import *
 from AES import AES_Cipher, AESKeyGeneration
@@ -119,7 +120,7 @@ class MainWindow(QWidget):
     
     def darkmode_event(self):
         if self.darkmode_btn.isChecked():
-            app.setStyleSheet('Windows')
+            app.setStyleSheet(qdarktheme.load_stylesheet("light"))
         else:
             app.setStyleSheet(qdarktheme.load_stylesheet())
 
@@ -188,8 +189,7 @@ class MainWindow(QWidget):
 
 
 if __name__ == '__main__':
-
     app = QApplication(sys.argv)
-    app.setStyleSheet(qdarktheme.load_stylesheet())
     w = MainWindow()
+    app.setStyleSheet(qdarktheme.load_stylesheet())
     sys.exit(app.exec_())
