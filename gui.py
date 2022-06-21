@@ -115,12 +115,16 @@ class MainWindow(QMainWindow, Drag_DropArea):
 
         self.key_input = QTextEdit(self)
         self.key_input.setGeometry(330, 160, 180, 30)
-        self.key_input.setPlaceholderText("Your Key")
+        self.key_input.setPlaceholderText("1. Feld")
         self.text_input.setToolTip("Copy your key here")
 
         self.key_output = QTextEdit(self)
         self.key_output.setGeometry(330, 200, 180, 30)
-        self.key_output.setPlaceholderText("Your Key")
+        self.key_output.setPlaceholderText("2. Feld")
+
+        self.public_key = QTextEdit(self)
+        self.public_key.setGeometry(330, 240, 180, 30)
+        self.public_key.setPlaceholderText("3. Feld")
 
         self.input_file_name = QLabel(self)
         self.input_file_name.setGeometry(30, 220, 260, 30)
