@@ -5,6 +5,7 @@ from Conversion import *
 from AES import AES_Cipher, AESKeyGeneration
 from RSA import *
 import qdarktheme
+import sys
 
 
 class MainWindow(QWidget):
@@ -180,3 +181,10 @@ class MainWindow(QWidget):
             self.RSA = RSA(123, 123) #temporary
 
 
+
+if __name__ == '__main__':
+
+    app = QApplication(sys.argv)
+    app.setStyleSheet(qdarktheme.load_stylesheet())
+    w = MainWindow()
+    sys.exit(app.exec_())
