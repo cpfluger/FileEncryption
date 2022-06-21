@@ -1,24 +1,63 @@
 import Conversion
 from PyQt5.QtWidgets import *
-from PyQt5.QtGui import QPalette
+from PyQt5.QtCore import Qt
 from PyQt5 import QtGui
+from PyQt5.QtGui import QPixmap
 from Conversion import *
 from AES import AES_Cipher, AESKeyGeneration
 from RSA import *
 import qdarktheme
 import sys
 
+class Drag_DropArea(QListWidget):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.initUI()
+        self.setAcceptDrops(True)
+        self.setGeometry(550, 50, 300, 200)
 
-class MainWindow(QWidget):
+    def initUI(self):
+        self.centerlabel = QLabel(self)
+        self.centerlabel.setGeometry(80, 30, 150, 150)
+        self.setAutoFillBackground(True)
+        pixmap = QPixmap('images/download1.png')
+        self.centerlabel.setPixmap(pixmap)
+
+    def dragEnterEvent(self, event):
+        if event.mimeData().hasUrls:
+            event.accept()
+        else:
+            event.ignore()
+
+    def dragMoveEvent(self, event):
+        if event.mimeData().hasUrls():
+            event.setDropAction(Qt.CopyAction)
+            event.accept()
+        else:
+            event.ignore()
+
+    def dropEvent(self, event):
+        files = [u.toLocalFile() for u in event.mimeData().urls()]
+        for f in files:
+            print(f)
+
+
+class MainWindow(QMainWindow):
 
 
     def __init__(self):
         super().__init__()
         self.initUI()
         self.filename = ""
-        self.setAcceptDrops(True)
         self.RSA = None
         self.RSA_Key = None
+        self.drag_drop = Drag_DropArea(self)
+
+        self.setWindowTitle("FileEncryption")
+        self.setWindowIcon(QtGui.QIcon('images/icon.png'))
+        self.setMinimumSize(880, 300)
+        self.setMaximumSize(880, 300)
+        self.show()
 
 
 
@@ -86,11 +125,6 @@ class MainWindow(QWidget):
         self.input_file_name.setText("")
 
 
-        self.setWindowTitle("FileEncryption")
-        self.setWindowIcon(QtGui.QIcon('images/icon.png'))
-        self.setMinimumSize(520, 250)
-        self.setMaximumSize(520, 250)
-        self.show()
 
 
     def browsefiles(self):
@@ -102,16 +136,6 @@ class MainWindow(QWidget):
     def submit_encrypt(self):
         self.mytext = self.text_input.toPlainText()
 
-    def dragEnterEvent(self, event):
-        if event.mimeData().hasUrls():
-            event.accept()
-        else:
-            event.ignore()
-
-    def dropEvent(self, event):
-        files = [u.toLocalFile() for u in event.mimeData().urls()]
-        for f in files:
-            self.input_file_name.setText(f)
 
     #---------------------------------EVENTS-------------------------------------------#
 
@@ -197,9 +221,9 @@ class MainWindow(QWidget):
             self.RSA = RSA(123, 123) #temporary
 
 
-
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     w = MainWindow()
     app.setStyleSheet(qdarktheme.load_stylesheet())
+    w.show()
     sys.exit(app.exec_())
