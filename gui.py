@@ -97,6 +97,11 @@ class MainWindow(QMainWindow, Drag_DropArea):
         self.text_input = QPlainTextEdit(self)
         self.text_input.setGeometry(20, 80, 260, 40)
         self.text_input.setPlaceholderText("Input your text here...")
+
+        self.delete_input = QPushButton("X",self)
+        self.delete_input.setGeometry(280, 80, 40, 40)
+        self.delete_input.clicked.connect(self.delete_input_event)
+
         
 
         self.text_output = QPlainTextEdit(self)
@@ -193,6 +198,8 @@ class MainWindow(QMainWindow, Drag_DropArea):
     def file_option_event(self):
         pass
 
+    def delete_input_event(self):
+        self.text_input.setPlainText("")
 
     #--------------------------------Encrypt & Decrypt---------------------------------#  
       
