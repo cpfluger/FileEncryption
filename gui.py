@@ -1,3 +1,4 @@
+from pickle import TRUE
 import Conversion
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import Qt
@@ -139,7 +140,7 @@ class MainWindow(QMainWindow, Drag_DropArea):
         self.generate_key_button.setGeometry(330, 270, 100, 30)
         self.generate_key_button.clicked.connect(self.generate_key)
 
-        self.error_box = QLabel("Error", self)
+        self.error_box = QLabel("", self)
         self.error_box.setGeometry(330, 300, 300, 30)
 
         self.file_encrypt_option = QRadioButton("File", self)
@@ -186,7 +187,11 @@ class MainWindow(QMainWindow, Drag_DropArea):
             app.setStyleSheet(qdarktheme.load_stylesheet())
 
     def generate_key(self):
-        pass
+        if self.rsa_option.isChecked():
+            pass
+
+        elif self.aes_option.isChecked():
+            self.generate_aes_key()
 
     def error_message(self, input):
         self.error_box.setText("")
@@ -205,28 +210,28 @@ class MainWindow(QMainWindow, Drag_DropArea):
       
     def AES_encrypt(self):
         
-        self.check_key_status()
-        
-        if self.check_if_input_is_hex() == True:
-            print("pls input a non encrypted text")
+        if self.check_key_status() == True:
+            
+            if self.check_if_input_is_hex() == True:
+                print("pls input a non encrypted text")
 
-        else:
-            self.key_input.setPlainText(byte_string_to_hex_string(self.aes_working_key))
-            inputtext = self.text_input.toPlainText()                                                #get input from input field
-            encrypted_input = self.AES_Cipher.encrypt(string_to_bytestring(inputtext))               #encrypt the converted input text
-            self.text_output.setPlainText(byte_string_to_hex_string(encrypted_input))                #stringing the bytestring to make it possible to put it inot the qplaintextedit
+            else:
+                inputtext = self.text_input.toPlainText()                                                #get input from input field
+                encrypted_input = self.AES_Cipher.encrypt(string_to_bytestring(inputtext))               #encrypt the converted input text
+                self.text_output.setPlainText(byte_string_to_hex_string(encrypted_input))                #stringing the bytestring to make it possible to put it inot the qplaintextedit
 
 
     def AES_decrypt(self):
 
-        self.check_key_status()
-        if self.check_if_input_is_hex() == False:
-            print("pls input an encrypted text")
+        if self.check_key_status() == True:
 
-        else:
-            encrypted_txt = self.text_input.toPlainText()                                      #write output to field  output = string b'\xFF'
-            mytext = self.AES_Cipher.decrypt(hex_string_to_byte_string(encrypted_txt))
-            self.text_output.setPlainText(bytestring_to_string(mytext))
+            if self.check_if_input_is_hex() == False:
+                print("pls input an encrypted text")
+
+            else:
+                encrypted_txt = self.text_input.toPlainText()                                      #write output to field  output = string b'\xFF'
+                mytext = self.AES_Cipher.decrypt(hex_string_to_byte_string(encrypted_txt))
+                self.text_output.setPlainText(bytestring_to_string(mytext))
 
 
     def RSA_encrypt(self):
@@ -249,19 +254,21 @@ class MainWindow(QMainWindow, Drag_DropArea):
     def check_key_status(self):
 
         if self.key_input.toPlainText() == "":
-            print("generate or give me key")
-            self.aes_key = AESKeyGeneration()
-            self.aes_key.key_generate()
-            self.aes_working_key = self.aes_key.get_key()
-            self.AES_Cipher = AES_Cipher(self.aes_working_key, self.aes_working_key)
+            self.error_message("Pls generate a Key first, or insert one yourself!")
+            return False
 
         else:
-            print("taking your choosen key")
-            self.aes_working_key = hex_string_to_byte_string( self.key_input.toPlainText())
-            self.AES_Cipher = AES_Cipher(self.aes_working_key, self.aes_working_key)
+            self.error_message("Working with your Key :)")
+            return True
+
 
     def generate_aes_key(self):
-        pass
+            self.aes_key = AESKeyGeneration()
+            self.aes_key.key_generate()
+            self.AES_Cipher = AES_Cipher(self.aes_key.get_key(), self.aes_key.get_key())    
+            self.key_input.setPlainText(byte_string_to_hex_string(self.aes_key.get_key()))
+            self.error_message("Key successfully generated")
+
 
     def check_key_rsa(self):
         if self.key_input.toPlainText() == "":
@@ -275,8 +282,6 @@ class MainWindow(QMainWindow, Drag_DropArea):
             self.RSA = RSA(123, 123) #temporary
 
 
-
-
     #------------------------------------------mischeläneus Methods---------------------------------------------------#
 
     def check_if_input_is_hex(self):
@@ -286,13 +291,6 @@ class MainWindow(QMainWindow, Drag_DropArea):
             return True
         else:
             return False
-
-    
-    def generate_aes_kes(self):
-            self.aes_key = AESKeyGeneration()
-            self.aes_key.key_generate()
-            self.aes_working_key = self.aes_key.get_key()
-            self.AES_Cipher = AES_Cipher(self.aes_working_key, self.aes_working_key)    
 
 
 if __name__ == '__main__':
