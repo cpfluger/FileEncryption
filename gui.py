@@ -173,6 +173,7 @@ class MainWindow(QMainWindow, Drag_DropArea):
     def AES_encrypt(self):
         
         self.check_key_status()
+        
         if self.check_if_input_is_hex() == True:
             print("pls input a non encrypted text")
 
@@ -215,26 +216,19 @@ class MainWindow(QMainWindow, Drag_DropArea):
     def check_key_status(self):
 
         if self.key_input.toPlainText() == "":
-            print("generating Key")
+            print("generate or give me key")
             self.aes_key = AESKeyGeneration()
             self.aes_key.key_generate()
             self.aes_working_key = self.aes_key.get_key()
             self.AES_Cipher = AES_Cipher(self.aes_working_key, self.aes_working_key)
 
         else:
-            print("taking your key")
+            print("taking your choosen key")
             self.aes_working_key = hex_string_to_byte_string( self.key_input.toPlainText())
             self.AES_Cipher = AES_Cipher(self.aes_working_key, self.aes_working_key)
 
-
-    def check_if_input_is_hex(self):
-
-        input = self.text_input.toPlainText()
-        if input[0:2] == "0x":
-            return True
-        else:
-            return False
-
+    def generate_aes_key(self):
+        pass
 
     def check_key_rsa(self):
         if self.key_input.toPlainText() == "":
@@ -246,6 +240,26 @@ class MainWindow(QMainWindow, Drag_DropArea):
         elif "0x" in self.key_input.toPlainText() and "0x" in self.key_input.toPlainText():
             print("taking your key")
             self.RSA = RSA(123, 123) #temporary
+
+
+
+
+    #------------------------------------------mischeläneus Methods---------------------------------------------------#
+
+    def check_if_input_is_hex(self):
+
+        input = self.text_input.toPlainText()
+        if input[0:2] == "0x":
+            return True
+        else:
+            return False
+
+    
+    def generate_aes_kes(self):
+            self.aes_key = AESKeyGeneration()
+            self.aes_key.key_generate()
+            self.aes_working_key = self.aes_key.get_key()
+            self.AES_Cipher = AES_Cipher(self.aes_working_key, self.aes_working_key)    
 
 
 if __name__ == '__main__':
