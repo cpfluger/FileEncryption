@@ -18,10 +18,10 @@ class Drag_DropArea(QListWidget):
 
     def initUI(self):
         self.centerlabel = QLabel(self)
-        self.centerlabel.setGeometry(80, 30, 150, 150)
+        self.centerlabel.setGeometry(80, 30, 50, 50)
         self.setAutoFillBackground(True)
-        pixmap = QPixmap('images/download1.png')
-        self.centerlabel.setPixmap(pixmap)
+        self.pixmap = QPixmap('images/download2.png')
+        self.centerlabel.setPixmap(self.pixmap)
 
     def dragEnterEvent(self, event):
         if event.mimeData().hasUrls:
@@ -155,6 +155,7 @@ class MainWindow(QMainWindow):
     def darkmode_event(self):
         if self.darkmode_btn.isChecked():
             app.setStyleSheet(qdarktheme.load_stylesheet("light"))
+            self.pixmap
         else:
             app.setStyleSheet(qdarktheme.load_stylesheet())
 
