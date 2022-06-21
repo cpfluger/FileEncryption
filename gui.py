@@ -25,7 +25,7 @@ class MainWindow(QWidget):
     def initUI(self):
 
         header = QLabel("FileEncryption", self)
-        header.move(20,10)
+        header.setGeometry(20,10, 200, 50)
         
         font_header = QtGui.QFont()
         font_header.setPointSize(14)
@@ -102,6 +102,16 @@ class MainWindow(QWidget):
     def submit_encrypt(self):
         self.mytext = self.text_input.toPlainText()
 
+    def dragEnterEvent(self, event):
+        if event.mimeData().hasUrls():
+            event.accept()
+        else:
+            event.ignore()
+
+    def dropEvent(self, event):
+        files = [u.toLocalFile() for u in event.mimeData().urls()]
+        for f in files:
+            self.input_file_name.setText(f)
 
     #---------------------------------EVENTS-------------------------------------------#
 

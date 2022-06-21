@@ -1,17 +1,28 @@
+from PyQt5.QtWidgets import QMainWindow, QApplication
 import sys
 
-from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton
 
-import qdarktheme
+class MainWidget(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Drag and Drop")
+        self.resize(720, 480)
+        self.setAcceptDrops(True)
 
-app = QApplication(sys.argv)
-main_win = QMainWindow()
-push_button = QPushButton("PyQtDarkTheme!!")
-main_win.setCentralWidget(push_button)
+    def dragEnterEvent(self, event):
+        if event.mimeData().hasUrls():
+            event.accept()
+        else:
+            event.ignore()
 
-# Apply dark theme to Qt application
-app.setStyleSheet(qdarktheme.load_stylesheet())
+    def dropEvent(self, event):
+        files = [u.toLocalFile() for u in event.mimeData().urls()]
+        for f in files:
+            print(f)
 
-main_win.show()
 
-app.exec()
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    ui = MainWidget()
+    ui.show()
+    sys.exit(app.exec_())
