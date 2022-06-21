@@ -318,7 +318,7 @@ class MainWindow(QMainWindow, Drag_DropArea):
     def check_if_input_is_hex(self):
 
         input = self.text_input.toPlainText()
-        if input[0:2] == "0x":
+        if input[0:2] and input[4:6] == "0x":
             return True
         else:
             return False
