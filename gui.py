@@ -102,6 +102,7 @@ class MainWindow(QMainWindow, Drag_DropArea):
 
         self.text_output = QPlainTextEdit(self)
         self.text_output.setGeometry(20, 130, 260, 40)
+        self.text_output.setReadOnly(True)
         self.text_output.setPlaceholderText("Your decrypted text will spawn here...")
 
         self.rsa_option = QRadioButton("RSA", self)
@@ -115,12 +116,16 @@ class MainWindow(QMainWindow, Drag_DropArea):
 
         self.key_input = QTextEdit(self)
         self.key_input.setGeometry(330, 160, 180, 30)
-        self.key_input.setPlaceholderText("Your Key")
+        self.key_input.setPlaceholderText("1. Feld")
         self.text_input.setToolTip("Copy your key here")
 
         self.key_output = QTextEdit(self)
         self.key_output.setGeometry(330, 200, 180, 30)
-        self.key_output.setPlaceholderText("Your Key")
+        self.key_output.setPlaceholderText("2. Feld")
+
+        self.public_key = QTextEdit(self)
+        self.public_key.setGeometry(330, 240, 180, 30)
+        self.public_key.setPlaceholderText("3. Feld")
 
         self.input_file_name = QLabel(self)
         self.input_file_name.setGeometry(30, 220, 260, 30)
@@ -132,6 +137,14 @@ class MainWindow(QMainWindow, Drag_DropArea):
 
         self.error_box = QLabel("", self)
         self.error_box.setGeometry(330, 300, 300, 30)
+
+        self.file_encrypt_option = QRadioButton("File", self)
+        self.file_encrypt_option.setGeometry(20, 270, 50, 30)
+        self.file_encrypt_option.clicked.connect(self.file_option_event)
+
+        self.text_encrypt_option = QRadioButton("Text", self)
+        self.text_encrypt_option.setGeometry(20, 290, 50, 30)
+        self.text_encrypt_option.clicked.connect(self.text_option_event)
 
 
 
@@ -178,6 +191,12 @@ class MainWindow(QMainWindow, Drag_DropArea):
     def error_message(self, input):
         self.error_box.setText("")
         self.error_box.setText(input)
+
+    def text_option_event(self):
+        pass
+    
+    def file_option_event(self):
+        pass
 
 
     #--------------------------------Encrypt & Decrypt---------------------------------#  
