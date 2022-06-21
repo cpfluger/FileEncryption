@@ -155,12 +155,10 @@ class MainWindow(QMainWindow, Drag_DropArea):
     def darkmode_event(self):
         if self.darkmode_btn.isChecked():
             app.setStyleSheet(qdarktheme.load_stylesheet("light"))
-            self.pixmap = QPixmap('images/download1.png')
-            self.centerlabel.setPixmap(self.pixmap)
+
         else:
             app.setStyleSheet(qdarktheme.load_stylesheet())
-            self.pixmap = QPixmap('images/download2.png')
-            self.centerlabel.setPixmap(self.pixmap)
+
 
     #--------------------------------Encrypt & Decrypt---------------------------------#  
       
