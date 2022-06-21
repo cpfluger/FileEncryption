@@ -101,6 +101,7 @@ class MainWindow(QMainWindow, Drag_DropArea):
 
         self.text_output = QPlainTextEdit(self)
         self.text_output.setGeometry(20, 130, 260, 40)
+        self.text_output.setReadOnly(True)
         self.text_output.setPlaceholderText("Your decrypted text will spawn here...")
 
         self.rsa_option = QRadioButton("RSA", self)
@@ -131,6 +132,14 @@ class MainWindow(QMainWindow, Drag_DropArea):
 
         self.error_box = QLabel("Error", self)
         self.error_box.setGeometry(330, 300, 300, 30)
+
+        self.file_encrypt_option = QRadioButton("File", self)
+        self.file_encrypt_option.setGeometry(20, 270, 50, 30)
+        self.file_encrypt_option.clicked.connect(self.file_option_event)
+
+        self.text_encrypt_option = QRadioButton("Text", self)
+        self.text_encrypt_option.setGeometry(20, 290, 50, 30)
+        self.text_encrypt_option.clicked.connect(self.text_option_event)
 
 
 
@@ -173,6 +182,12 @@ class MainWindow(QMainWindow, Drag_DropArea):
     def error_message(self, input):
         self.error_box.setText("")
         self.error_box.setText(input)
+
+    def text_option_event(self):
+        pass
+    
+    def file_option_event(self):
+        pass
 
 
     #--------------------------------Encrypt & Decrypt---------------------------------#  
