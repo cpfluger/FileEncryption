@@ -56,8 +56,8 @@ class MainWindow(QMainWindow, Drag_DropArea):
 
         self.setWindowTitle("FileEncryption")
         self.setWindowIcon(QtGui.QIcon('images/icon.png'))
-        self.setMinimumSize(880, 300)
-        self.setMaximumSize(880, 300)
+        self.setMinimumSize(880, 350)
+        self.setMaximumSize(880, 350)
         self.show()
 
 
@@ -114,7 +114,7 @@ class MainWindow(QMainWindow, Drag_DropArea):
 
         self.key_input = QTextEdit(self)
         self.key_input.setGeometry(330, 160, 180, 30)
-        self.key_input.setPlaceholderText("Input your key")
+        self.key_input.setPlaceholderText("Your Key")
         self.text_input.setToolTip("Copy your key here")
 
         self.key_output = QTextEdit(self)
@@ -128,6 +128,9 @@ class MainWindow(QMainWindow, Drag_DropArea):
         self.generate_key_button = QPushButton("Generate Key", self)
         self.generate_key_button.setGeometry(330, 240, 100, 30)
         self.generate_key_button.clicked.connect(self.generate_key)
+
+        self.error_box = QLabel("Error", self)
+        self.error_box.setGeometry(330, 300, 300, 30)
 
 
 
@@ -166,6 +169,9 @@ class MainWindow(QMainWindow, Drag_DropArea):
 
     def generate_key(self):
         pass
+
+    def erro_message(self, input):
+        self.error_box.setText(input)
 
 
     #--------------------------------Encrypt & Decrypt---------------------------------#  
