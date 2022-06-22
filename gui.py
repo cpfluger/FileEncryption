@@ -241,7 +241,7 @@ class MainWindow(QMainWindow):
         FileEncryption.setStatusBar(self.statusbar)
 
         self.fillUi(FileEncryption)
-        self.fillToolTipps(FileEncryption)
+        self.fillToolTipps()
         QtCore.QMetaObject.connectSlotsByName(FileEncryption)
 
 
