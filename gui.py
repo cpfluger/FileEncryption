@@ -83,11 +83,11 @@ class MainWindow(QMainWindow):
         self.browse_btn.setFont(basicfont)
         self.browse_btn.clicked.connect(self.browsefiles)
 
-<<<<<<< HEAD
+
         self.horizontalLayoutWidget = QWidget(self.centralwidget)
-=======
+
         self.horizontalLayoutWidget = QtWidgets.QWidget(self.centralwidget)
->>>>>>> 92e8db092ee57b49beee214bbc667d3d85e9d394
+
         self.horizontalLayoutWidget.setGeometry(QtCore.QRect(80, 80, 871, 51))
         self.horizontalLayoutWidget.setObjectName("horizontalLayoutWidget")
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget)
@@ -278,15 +278,14 @@ class MainWindow(QMainWindow):
         self.text_input.setToolTip("Copy your key here")
         self.browse_btn.setToolTip("Open File Explorer")
 
-<<<<<<< HEAD
+
     def browsefiles(self):
         self.temp_path = QFileDialog.getOpenFileName(self, "Open File")
         self.file_path = self.temp_path[0]
         self.file_input = FileHandler(self.file_path)
         self.file_input_content = self.file_input.read_all_bytes()
         self.input_file_name.setText(self.file_path)
-=======
->>>>>>> 92e8db092ee57b49beee214bbc667d3d85e9d394
+
 
     #---------------------------------------------EVENTS-------------------------------------------------#
 
