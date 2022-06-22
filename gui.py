@@ -9,12 +9,14 @@ import sys
 
 
 class MainWindow(QMainWindow):
+
     def __init__(self):
         super().__init__()
         self.filename = ""
         self.RSA = None
         self.RSA_Key = None
         self.file_path = ""
+
 
     def initUI(self, FileEncryption):
 
@@ -103,12 +105,12 @@ class MainWindow(QMainWindow):
         self.horizontalLayout.addItem(spacerItem1)
 
         self.file_encrypt_option.setFont(headingfont)
-        self.file_encrypt_option.clicked.connect(self.file_option_event)
+        #self.file_encrypt_option.clicked.connect(self.file_option_event)
         self.file_encrypt_option.setChecked(True)
 
 
         self.text_encrypt_option.setFont(headingfont)
-        self.text_encrypt_option.clicked.connect(self.text_option_event)
+        #self.text_encrypt_option.clicked.connect(self.text_option_event)
 
 
         self.Drag_DropArea = QListWidget(self.centralwidget)
@@ -133,13 +135,11 @@ class MainWindow(QMainWindow):
         self.line_3.setFrameShadow(QFrame.Sunken)
 
 
-
         self.header_2 = QLabel(self.centralwidget)
         self.header_2.setGeometry(QtCore.QRect(730, 10, 271, 41))
         font = QtGui.QFont()
         font.setPointSize(12)
         self.header_2.setFont(font)
-
 
         
         self.key_input = QTextEdit(self.centralwidget)
@@ -192,15 +192,6 @@ class MainWindow(QMainWindow):
         self.horizontalLayout_2.addItem(spacerItem3)
         
 
-
-        
-
-
-        
-
-
-
-
         self.generate_key_button = QtWidgets.QPushButton(self.horizontalLayoutWidget_2)
         self.generate_key_button.setFont(headingfont)
         self.generate_key_button.clicked.connect(self.generate_key)
@@ -213,20 +204,20 @@ class MainWindow(QMainWindow):
         self.aes_label.setGeometry(QtCore.QRect(520, 380, 131, 16))
         self.aes_label.setFont(basicfont)
 
-        self.key_input2 = QTextEdit(self.centralwidget)
-        self.key_input2.setGeometry(QtCore.QRect(80, 400, 261, 40))
-        self.key_input2.setReadOnly(False)
-        self.key_input2.setTextInteractionFlags(QtCore.Qt.TextEditorInteraction)
-
-        self.key_output = QTextEdit(self.centralwidget)
-        self.key_output.setGeometry(QtCore.QRect(80, 480, 261, 40))
-        self.key_output.setReadOnly(False)
-        self.key_output.setTextInteractionFlags(QtCore.Qt.TextEditorInteraction)
-
         self.public_key = QTextEdit(self.centralwidget)
-        self.public_key.setGeometry(QtCore.QRect(80, 560, 261, 40))
+        self.public_key.setGeometry(QtCore.QRect(80, 400, 261, 40))
         self.public_key.setReadOnly(False)
         self.public_key.setTextInteractionFlags(QtCore.Qt.TextEditorInteraction)
+
+        self.private_key = QTextEdit(self.centralwidget)
+        self.private_key.setGeometry(QtCore.QRect(80, 480, 261, 40))
+        self.private_key.setReadOnly(False)
+        self.private_key.setTextInteractionFlags(QtCore.Qt.TextEditorInteraction)
+
+        self.prime_product = QTextEdit(self.centralwidget)
+        self.prime_product.setGeometry(QtCore.QRect(80, 560, 261, 40))
+        self.prime_product.setReadOnly(False)
+        self.prime_product.setTextInteractionFlags(QtCore.Qt.TextEditorInteraction)
 
         self.error_box = QLabel(self.centralwidget)
         self.error_box.setFont(basicfont)
@@ -242,6 +233,7 @@ class MainWindow(QMainWindow):
 
 
     def fillUi(self, FileEncryption):
+
         _translate = QtCore.QCoreApplication.translate
         FileEncryption.setWindowTitle(_translate("FileEncryption", "FileEncryption"))
         self.header.setText(_translate("FileEncryption", "AES/RSA FileEncryption"))
@@ -258,14 +250,16 @@ class MainWindow(QMainWindow):
         self.aes_option.setText(_translate("FileEncryption", "AES - Encryption"))
         self.generate_key_button.setText(_translate("FileEncryption", "Generate Key"))
         self.aes_label.setText(_translate("FileEncryption", "AES-Key:"))
-        self.public_key.setPlaceholderText("3. Feld")
-        self.key_output.setPlaceholderText("2. Feld")
+        self.prime_product.setPlaceholderText("insert prime product")
+        self.private_key.setPlaceholderText("insert private key")
+        self.public_key.setPlaceholderText("insert public key")
         self.text_output.setPlaceholderText("Your decrypted text will spawn here...")
         self.key_input.setPlaceholderText("Generated Key")
         self.text_input.setPlaceholderText("Input your text here...")
 
 
     def fillToolTipps(self):
+
         self.rsa_option.setToolTip("Choose RSA encryption")
         self.decrypt_btn.setToolTip("Press Button to decrypt")
         self.encrypt_btn.setToolTip("Press Button to encrypt")
@@ -275,67 +269,81 @@ class MainWindow(QMainWindow):
         self.browse_btn.setToolTip("Open File Explorer")
 
 
-
     #---------------------------------------------EVENTS-------------------------------------------------#
 
     def encrypt_event(self):
+
         self.text_output.setPlainText("")
         if self.rsa_option.isChecked():
-            self.check_key_rsa()
             self.RSA_encrypt()
+
         elif self.aes_option.isChecked():
             self.AES_encrypt()
 
     def decrypt_event(self):
+
         self.text_output.setPlainText("")
         if self.rsa_option.isChecked():
             self.RSA_decrypt()
         elif self.aes_option.isChecked():
             self.AES_decrypt()
 
+
     def darkmode_event(self):
+
         if self.darkmode_btn.isChecked():
             app.setStyleSheet(qdarktheme.load_stylesheet("light"))
             self.pixmap = QtGui.QPixmap('images/download1.png')
             self.centerlabel.setPixmap(self.pixmap)
-            
 
         else:
             app.setStyleSheet(qdarktheme.load_stylesheet())
             self.pixmap = QtGui.QPixmap('images/download2.png')
             self.centerlabel.setPixmap(self.pixmap)
 
+
     def generate_key(self):
+
         if self.rsa_option.isChecked():
-            pass
+            self.generate_rsa_key()
 
         elif self.aes_option.isChecked():
             self.generate_aes_key()
 
+
     def error_message(self, input):
+
         self.error_box.setText("")
         self.error_box.setText(input)
 
-    def text_option_event(self):
+
+    def text_option_event(self): #?
         pass
 
-    def file_option_event(self):
+
+    def file_option_event(self):  #?
         print("i was pressed")
 
         self.text_input.setPlainText("")
 
+
     def dragEnterEvent(self, event):
+
         if event.mimeData().hasUrls:
             event.accept()
         else:
             event.ignore()
 
+
     def dropEvent(self, event):
+
         files = [u.toLocalFile() for u in event.mimeData().urls()]
         for f in files:
             print(f)
-    
+
+
     def browsefiles_event(self):
+
         self.temp_path = QFileDialog.getOpenFileName(self, "Open File")
         self.file_path = self.temp_path[0]
         self.update_file()
@@ -343,15 +351,17 @@ class MainWindow(QMainWindow):
 
 
     def update_file(self):
+
         self.file_input = FileHandler(self.file_path)
         self.file_input_content = self.file_input.read_all_bytes()
 
 
     def submit_encrypt(self):
+
         self.mytext = self.text_input.toPlainText()
 
-    #----------------------------------------Encrypt & Decrypt--------------------------------------------#  
-      
+
+    #----------------------------------------Encrypt & Decrypt--------------------------------------------#
 
     def AES_encrypt(self):
         
@@ -359,24 +369,21 @@ class MainWindow(QMainWindow):
             
             if self.check_if_input_is_hex() == False:
 
-                if self.check_if_key_is_empty() == False:
+                if self.check_if_aes_key_is_empty() == False:
 
-                    if self.check_if_key_is_hex() == True:
+                    if self.check_if_aes_key_is_hex() == True:
                         
                         if self.file_encrypt_option.isChecked() == True:
                             
                             self.update_file()
                             inputtext = self.file_input_content
-                            print(inputtext)
                             encrypted_input = self.AES_Cipher.encrypt(string_to_bytestring(inputtext))               #encrypt the converted input text
                             self.file_input.overwrite_all_bytes(byte_string_to_hex_string(encrypted_input))
-                            self.text_output.setPlainText(byte_string_to_hex_string(encrypted_input)) 
-
+                            self.text_output.setPlainText(byte_string_to_hex_string(encrypted_input))
                         else:
                             inputtext = self.text_input.toPlainText()                                                #get input from input field
                             encrypted_input = self.AES_Cipher.encrypt(string_to_bytestring(inputtext))               #encrypt the converted input text
                             self.text_output.setPlainText(byte_string_to_hex_string(encrypted_input))                #stringing the bytestring to make it possible to put it inot the qplaintextedit
-            
                 else:
                     self.error_message("Please Input a Key first.")
             else:
@@ -384,15 +391,16 @@ class MainWindow(QMainWindow):
         else:
             self.error_message("Please Input a Text / File")
 
+
     def AES_decrypt(self):
         
         if self.check_if_input_is_empty() == False:
 
             if self.check_if_input_is_hex() == True:
     
-                if self.check_if_key_is_empty() == False:
+                if self.check_if_aes_key_is_empty() == False:
 
-                    if self.check_if_key_is_hex() == True:
+                    if self.check_if_aes_key_is_hex() == True:
                     
                         if self.file_encrypt_option.isChecked() == True:
                             encrypted_txt = self.file_input_content
@@ -413,60 +421,140 @@ class MainWindow(QMainWindow):
         else:
             self.error_message("Please Input a Text")
 
+
     def RSA_encrypt(self):
-        inputtext = self.text_input.toPlainText()
-        encrypted_input = self.RSA.encrypt(ascii_string_to_decimal(inputtext))
-        self.text_output.setPlainText(decimal_array_to_hex_string(encrypted_input))
+        if self.check_if_input_is_empty() == False:
+
+            if self.check_if_input_is_hex() == False:
+
+                if self.check_if_rsa_key_is_empty() == False:
+
+                    if self.check_if_rsa_key_is_hex() == True:
+
+                        if self.file_encrypt_option.isChecked() == True:
+                            self.update_file()
+                            inputtext = self.file_input_content
+                            encrypted_input = self.RSA.encrypt(ascii_string_to_decimal(inputtext))  # encrypt the converted input text
+                            self.file_input.overwrite_all_bytes(decimal_array_to_hex_string(encrypted_input))
+                            self.text_output.setPlainText(decimal_array_to_hex_string(encrypted_input))
+
+                        else:
+                            inputtext = self.text_input.toPlainText()  # get input from input field
+                            encrypted_input = self.RSA.encrypt(ascii_string_to_decimal(inputtext))  # encrypt the converted input text
+                            self.text_output.setPlainText(decimal_array_to_hex_string(encrypted_input))  # stringing the bytestring to make it possible to put it inot the qplaintextedit
+                else:
+                    self.error_message("Please Input a Key Pair first.")
+            else:
+                self.error_message("Please Input a non encryptet Text")
+        else:
+            self.error_message("Please Input a Text / File")
+
 
     def RSA_decrypt(self):
-        encrypted_text = self.text_output.toPlainText()
-        decrypted_text = self.RSA.decrypt(hex_string_to_decimal_array(encrypted_text))
-        self.text_input.setPlainText(decimal_array_to__ascii_string(decrypted_text))
+
+        if self.check_if_input_is_empty() == False:
+
+            if self.check_if_input_is_hex() == True:
+
+                if self.check_if_rsa_key_is_empty() == False:
+
+                    if self.check_if_rsa_key_is_hex() == True:
+
+                        if self.file_encrypt_option.isChecked() == True:
+                            encrypted_txt = self.file_input_content
+                            mytext = self.RSA.decrypt(hex_string_to_decimal_array(encrypted_txt))
+                            self.file_input.overwrite_all_bytes(decimal_array_to__ascii_string(mytext))
+                            self.text_output.setPlainText(decimal_array_to__ascii_string(mytext))
+
+                        else:
+
+                            encrypted_txt = self.text_input.toPlainText()  # write output to field  output = string b'\xFF'
+                            mytext = self.RSA.decrypt(hex_string_to_decimal_array(encrypted_txt))
+                            self.text_output.setPlainText(decimal_array_to__ascii_string(mytext))
+                else:
+                    self.error_message("Please Input a Key Pair first.")
+            else:
+                self.error_message("Please input an encrypted text")
+
+        else:
+            self.error_message("Please Input a Text")
 
     #---------------------------------------Key Operations------------------------------------------------#
 
-    def check_if_key_is_empty(self):
+    def check_if_aes_key_is_empty(self):
 
         if self.key_input.toPlainText() == "":
             self.error_message("Pls generate a Key first, or insert a valid one yourself!")
             return True
 
         else:
-            if self.check_if_key_is_hex() == False:
-                
+            if self.check_if_aes_key_is_hex() == False:
                 self.error_message("Please input a hex key")
                 return False
             
-            elif self.check_if_key_is_hex() == True:
+            elif self.check_if_aes_key_is_hex() == True:
                 self.error_message("Working with the given Key")
-                self.aes_working_key = hex_string_to_byte_string( self.key_input.toPlainText())
-                self.AES_Cipher = AES_Cipher(self.aes_working_key, self.aes_working_key)
+                aes_working_key = hex_string_to_byte_string(self.key_input.toPlainText())
+                self.AES_Cipher = AES_Cipher(aes_working_key, aes_working_key)
                 return False
+
+
+    def check_if_rsa_key_is_empty(self):
+
+        if self.public_key.toPlainText() == "" and self.prime_product.toPlainText() == "" and self.private_key.toPlainText() == "":
+            self.error_message("Pls generate a Key Pair first, or insert a valide one yourself!")
+            return True
+
+        else:
+            if self.check_if_rsa_key_is_hex() == False:
+                self.error_message("Please input a hex key")
+                return False
+
+            elif self.check_if_rsa_key_is_hex() == True:
+                self.error_message("Working with the given Key")
+                rsa_working_key = [int(self.public_key.toPlainText().replace("0x", ""), 16), int(self.private_key.toPlainText().replace("0x", ""), 16), int(self.prime_product.toPlainText().replace("0x", ""), 16)]
+                self.RSA = RSA(RSAKeyModel(rsa_working_key[2], rsa_working_key[0]), RSAKeyModel(rsa_working_key[2], rsa_working_key[1]))
+                return False
+
 
     def generate_aes_key(self):
 
-        if self.check_if_input_is_hex() == True:
-            self.error_message("You can't generate a Key when you want to decrypt")
-        
+        if self.check_if_input_is_empty() == False:
+
+            if self.check_if_input_is_hex() == True:
+                self.error_message("You can't generate a Key when you want to decrypt")
+
+            else:
+                self.aes_key = AESKeyGeneration()
+                self.aes_key.key_generate()
+                self.AES_Cipher = AES_Cipher(self.aes_key.get_key(), self.aes_key.get_key())
+                self.key_input.setPlainText(byte_string_to_hex_string(self.aes_key.get_key()))
+                self.error_message("Key successfully generated")
+
         else:
-            self.aes_key = AESKeyGeneration()
-            self.aes_key.key_generate()
-            self.AES_Cipher = AES_Cipher(self.aes_key.get_key(), self.aes_key.get_key())    
-            self.key_input.setPlainText(byte_string_to_hex_string(self.aes_key.get_key()))
-            self.error_message("Key successfully generated")
+            self.error_message("Please input a Text or File first")
 
-        self.key_input.toPlainText()
 
-    def check_key_rsa(self):
-        if self.key_input.toPlainText() == "":
-            print("generating Key")
-            self.RSA_Key = RSAKeyGenerator()
-            self.RSA_Key.load_generator(265)
-            self.RSA = RSA(self.RSA_Key.get_public_key(), self.RSA_Key.get_private_key())
+    def generate_rsa_key(self):
 
-        elif "0x" in self.key_input.toPlainText() and "0x" in self.key_input.toPlainText():
-            print("taking your key")
-            self.RSA = RSA(123, 123) #temporary
+        if self.check_if_input_is_empty() == False:
+
+            if self.check_if_input_is_hex() == True:
+
+                self.error_message("You can't generate a Key when you want to decrypt")
+
+            else:
+                self.RSA_Key = RSAKeyGenerator()
+                self.RSA_Key.load_generator(265)
+                self.RSA = RSA(self.RSA_Key.get_public_key(), self.RSA_Key.get_private_key())
+
+                self.public_key.setPlainText(hex(self.RSA_Key.get_public_key().get_key_specific_number()))
+                self.private_key.setPlainText(hex(self.RSA_Key.get_private_key().get_key_specific_number()))
+                self.prime_product.setPlainText(hex(self.RSA_Key.get_private_key().get_prime_number_product()))
+                self.error_message("RSA-Key successfully generated")
+        else:
+            self.error_message("Please input a Text or File first")
+
 
     #--------------------------------------input checks---------------------------------------------------#
 
@@ -478,8 +566,7 @@ class MainWindow(QMainWindow):
             if input[0:2] == "0x":
                 return True
             else:
-                return False            
-
+                return False
         else:
             input = self.text_input.toPlainText()
             if input[0:2] == "0x":
@@ -487,24 +574,15 @@ class MainWindow(QMainWindow):
             else:
                 return False
 
-    def check_if_key_is_hex(self):
-        input = self.key_input.toPlainText()
-        if input[0:2] == "0x":
-            return True
-        else:
-            return False
-    
+
     def check_if_input_is_empty(self):
 
         if self.file_encrypt_option.isChecked() == True:
             if self.file_path == "":
-                print("File path but empty one:", self.file_path)
                 return True
             else:
-                print("File path:", self.file_input.get_file_name())
                 return False
 
-        
         elif self.text_encrypt_option.isChecked() == True:
             if self.text_input.toPlainText() == "":
                 return True
@@ -512,9 +590,30 @@ class MainWindow(QMainWindow):
                 return False
 
 
+    def check_if_aes_key_is_hex(self):
+
+        input = self.key_input.toPlainText()
+        if input[0:2] == "0x":
+            return True
+        else:
+            return False
+
+
+    def check_if_rsa_key_is_hex(self):
+
+        input = [self.public_key.toPlainText(), self.private_key.toPlainText(), self.prime_product.toPlainText()]
+        return_flag = True
+
+        for text in input:
+            if text[0:2] != "0x":
+                return_flag = False
+        return return_flag
+
+
 #------------------------------------------main program---------------------------------------------------#      
 
 if __name__ == "__main__":
+
     app = QApplication(sys.argv)
     app.setStyleSheet(qdarktheme.load_stylesheet())
     FileEncryption = QMainWindow()

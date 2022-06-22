@@ -12,6 +12,7 @@ class RSA(Cryptography):
 
 
     def encrypt(self, clear_text_decimal_array):
+
         encrypted_text_decimal_array = []
 
         for element in clear_text_decimal_array:
@@ -37,6 +38,7 @@ class RSA(Cryptography):
 
 
     def decrypt(self, encrypted_text_decimal_array):
+
         clear_text_decimal_array = []
 
         for element in encrypted_text_decimal_array:
@@ -59,6 +61,7 @@ class RSA(Cryptography):
             clear_text_decimal_array.append(result)
 
         return  clear_text_decimal_array
+
 
 class RSAKeyGenerator(KeyGenerator):
 
