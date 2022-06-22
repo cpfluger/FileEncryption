@@ -1,4 +1,5 @@
 from msilib.schema import File
+from turtle import heading
 from Conversion import *
 from AES import AES_Cipher, AESKeyGeneration
 from RSA import *
@@ -17,6 +18,18 @@ class MainWindow(QMainWindow):
 
 
     def initUI(self, FileEncryption):
+
+        #----------Fonts------------
+        headingfont = QtGui.QFont()
+        headingfont.setPointSize(10)
+        headingfont.setBold(True)
+        headingfont.setWeight(75)
+
+        basicfont = QtGui.QFont()
+        basicfont.setPointSize(10)
+        basicfont.setBold(False)
+        basicfont.setWeight(50)
+
         FileEncryption.setObjectName("FileEncryption")
         FileEncryption.resize(1000, 700)
         FileEncryption.setMaximumSize(1000, 700)
@@ -50,6 +63,7 @@ class MainWindow(QMainWindow):
 
 
         self.text_input_label = QLabel(self.verticalLayoutWidget_3)
+        self.text_input_label.setFont(basicfont)
         self.verticalLayout_3.addWidget(self.text_input_label)
 
         self.text_input = QPlainTextEdit(self.verticalLayoutWidget_3)
@@ -67,25 +81,36 @@ class MainWindow(QMainWindow):
 
         self.browse_btn = QPushButton(self.centralwidget)
         self.browse_btn.setGeometry(QtCore.QRect(90, 260, 93, 28))
+        self.browse_btn.setFont(basicfont)
         self.browse_btn.clicked.connect(self.browsefiles)
 
-
-        self.horizontalLayoutWidget = QWidget(self.centralwidget)
+        self.horizontalLayoutWidget = QtWidgets.QWidget(self.centralwidget)
         self.horizontalLayoutWidget.setGeometry(QtCore.QRect(80, 80, 871, 51))
-
-
-        self.horizontalLayout = QHBoxLayout(self.horizontalLayoutWidget)
+        self.horizontalLayoutWidget.setObjectName("horizontalLayoutWidget")
+        self.horizontalLayout = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget)
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
-
-
+        self.horizontalLayout.setObjectName("horizontalLayout")
         self.file_encrypt_option = QRadioButton(self.horizontalLayoutWidget)
-        self.file_encrypt_option.clicked.connect(self.file_option_event)
-        self.file_encrypt_option.setChecked(True)
+
         self.horizontalLayout.addWidget(self.file_encrypt_option)
 
+        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout.addItem(spacerItem)
+
         self.text_encrypt_option = QRadioButton(self.horizontalLayoutWidget)
-        self.text_encrypt_option.clicked.connect(self.text_option_event)
+        
         self.horizontalLayout.addWidget(self.text_encrypt_option)
+        spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout.addItem(spacerItem1)
+
+        self.file_encrypt_option.setFont(headingfont)
+        self.file_encrypt_option.clicked.connect(self.file_option_event)
+        self.file_encrypt_option.setChecked(True)
+
+
+        self.text_encrypt_option.setFont(headingfont)
+        self.text_encrypt_option.clicked.connect(self.text_option_event)
+
 
         self.Drag_DropArea = QListWidget(self.centralwidget)
         self.Drag_DropArea.setGeometry(QtCore.QRect(90, 160, 256, 91))
@@ -128,43 +153,66 @@ class MainWindow(QMainWindow):
         self.text_output.setReadOnly(True)
 
         self.input_file_name = QLabel(self.centralwidget)
+        self.input_file_name.setFont(basicfont)
         self.input_file_name.setGeometry(QtCore.QRect(210, 260, 250, 30))
 
         self.darkmode_btn = QPushButton(self.centralwidget)
         self.darkmode_btn.setGeometry(QtCore.QRect(580, 20, 121, 31))
+        self.darkmode_btn.setFont(basicfont)
         self.darkmode_btn.clicked.connect(self.darkmode_event)
         self.darkmode_btn.setCheckable(True)
 
         self.encrypt_btn = QPushButton(self.centralwidget)
         self.encrypt_btn.setGeometry(QtCore.QRect(440, 520, 121, 41))
+        self.encrypt_btn.setFont(headingfont)
         self.encrypt_btn.clicked.connect(self.encrypt_event)
 
 
         self.decrypt_btn = QPushButton(self.centralwidget)
         self.decrypt_btn.setGeometry(QtCore.QRect(720, 520, 121, 41))
+        self.decrypt_btn.setFont(headingfont)
         self.decrypt_btn.clicked.connect(self.decrypt_event)
 
-        self.horizontalLayoutWidget_2 = QWidget(self.centralwidget)
-        self.horizontalLayoutWidget_2.setGeometry(QtCore.QRect(80, 320, 871, 57))
-        self.rsa_option = QRadioButton(self.horizontalLayoutWidget_2)
-        self.rsa_option.setChecked(True)
-
-        self.horizontalLayout_2 = QHBoxLayout(self.horizontalLayoutWidget_2)
+        self.horizontalLayoutWidget_2 = QtWidgets.QWidget(self.centralwidget)
+        self.horizontalLayoutWidget_2.setGeometry(QtCore.QRect(80, 320, 871, 61))
+        self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget_2)
         self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+
+        spacerItem2 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.rsa_option = QtWidgets.QRadioButton(self.horizontalLayoutWidget_2)
+        self.rsa_option.setFont(basicfont)
+        self.rsa_option.setChecked(True)
         self.horizontalLayout_2.addWidget(self.rsa_option)
+        self.horizontalLayout_2.addItem(spacerItem2)
 
-        spacerItem = QSpacerItem(220, 20, QSizePolicy.Fixed, QSizePolicy.Minimum)
-        self.horizontalLayout_2.addItem(spacerItem)
-
-        self.aes_option = QRadioButton(self.horizontalLayoutWidget_2)
+        self.aes_option = QtWidgets.QRadioButton(self.horizontalLayoutWidget_2)
+        self.aes_option.setFont(basicfont)
         self.horizontalLayout_2.addWidget(self.aes_option)
+        spacerItem3 = QtWidgets.QSpacerItem(100, 50, QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_2.addItem(spacerItem3)
+        
 
-        self.generate_key_button = QPushButton(self.horizontalLayoutWidget_2)
-        self.horizontalLayout_2.addWidget(self.generate_key_button)
+
+        
+
+
+        
+
+
+
+
+        self.generate_key_button = QtWidgets.QPushButton(self.horizontalLayoutWidget_2)
+        self.generate_key_button.setFont(headingfont)
         self.generate_key_button.clicked.connect(self.generate_key)
+
+        self.horizontalLayout_2.addWidget(self.generate_key_button)
+        spacerItem4 = QtWidgets.QSpacerItem(70, 20, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_2.addItem(spacerItem4)
 
         self.aes_label = QLabel(self.centralwidget)
         self.aes_label.setGeometry(QtCore.QRect(520, 380, 131, 16))
+        self.aes_label.setFont(basicfont)
 
         self.key_input2 = QTextEdit(self.centralwidget)
         self.key_input2.setGeometry(QtCore.QRect(80, 400, 261, 40))
@@ -182,6 +230,7 @@ class MainWindow(QMainWindow):
         self.public_key.setTextInteractionFlags(QtCore.Qt.TextEditorInteraction)
 
         self.error_box = QLabel(self.centralwidget)
+        self.error_box.setFont(basicfont)
         self.error_box.setGeometry(QtCore.QRect(440, 480, 401, 21))
 
         FileEncryption.setCentralWidget(self.centralwidget)
@@ -230,7 +279,7 @@ class MainWindow(QMainWindow):
         self.public_key.setPlaceholderText("3. Feld")
         self.key_output.setPlaceholderText("2. Feld")
         self.text_output.setPlaceholderText("Your decrypted text will spawn here...")
-        self.key_input.setPlaceholderText("1. Feld")
+        self.key_input.setPlaceholderText("Generated Key")
         self.text_input.setPlaceholderText("Input your text here...")
 
     def fillToolTipps(self, FileEncryption):
