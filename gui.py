@@ -14,12 +14,15 @@ class MainWindow(QMainWindow):
         self.filename = ""
         self.RSA = None
         self.RSA_Key = None
-        self.setWindowTitle("FileEncryption")
-        self.setWindowIcon(QtGui.QIcon('images/icon.png'))
+
 
     def initUI(self, FileEncryption):
         FileEncryption.setObjectName("FileEncryption")
         FileEncryption.resize(1000, 700)
+        FileEncryption.setMaximumSize(1000, 700)
+        FileEncryption.setMinimumSize(1000, 700)
+        FileEncryption.setWindowTitle("FileEncryption")
+        FileEncryption.setWindowIcon(QtGui.QIcon('images/icon.png'))
 
         self.centralwidget = QWidget(FileEncryption)
         self.centralwidget.setObjectName("centralwidget")
@@ -132,6 +135,7 @@ class MainWindow(QMainWindow):
         self.encrypt_btn = QPushButton(self.centralwidget)
         self.encrypt_btn.setGeometry(QtCore.QRect(440, 520, 121, 41))
         self.encrypt_btn.clicked.connect(self.encrypt_event)
+
 
         self.decrypt_btn = QPushButton(self.centralwidget)
         self.decrypt_btn.setGeometry(QtCore.QRect(720, 520, 121, 41))
@@ -246,6 +250,7 @@ class MainWindow(QMainWindow):
     #---------------------------------EVENTS-------------------------------------------#
 
     def encrypt_event(self):
+        self.text_output.setPlainText("")
         if self.rsa_option.isChecked():
             self.check_key_rsa()
             self.RSA_encrypt()
@@ -253,6 +258,7 @@ class MainWindow(QMainWindow):
             self.AES_encrypt()
 
     def decrypt_event(self):
+        self.text_output.setPlainText("")
         if self.rsa_option.isChecked():
             self.RSA_decrypt()
         elif self.aes_option.isChecked():
