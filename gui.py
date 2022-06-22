@@ -4,6 +4,7 @@ from RSA import *
 import qdarktheme
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import *
+from FileHandler import *
 import sys
 
 
@@ -13,7 +14,7 @@ class MainWindow(QMainWindow):
         self.filename = ""
         self.RSA = None
         self.RSA_Key = None
-
+        self.file_path = ""
 
     def initUI(self, FileEncryption):
 
@@ -82,7 +83,11 @@ class MainWindow(QMainWindow):
         self.browse_btn.setFont(basicfont)
         self.browse_btn.clicked.connect(self.browsefiles)
 
+<<<<<<< HEAD
+        self.horizontalLayoutWidget = QWidget(self.centralwidget)
+=======
         self.horizontalLayoutWidget = QtWidgets.QWidget(self.centralwidget)
+>>>>>>> 92e8db092ee57b49beee214bbc667d3d85e9d394
         self.horizontalLayoutWidget.setGeometry(QtCore.QRect(80, 80, 871, 51))
         self.horizontalLayoutWidget.setObjectName("horizontalLayoutWidget")
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget)
@@ -273,6 +278,15 @@ class MainWindow(QMainWindow):
         self.text_input.setToolTip("Copy your key here")
         self.browse_btn.setToolTip("Open File Explorer")
 
+<<<<<<< HEAD
+    def browsefiles(self):
+        self.temp_path = QFileDialog.getOpenFileName(self, "Open File")
+        self.file_path = self.temp_path[0]
+        self.file_input = FileHandler(self.file_path)
+        self.file_input_content = self.file_input.read_all_bytes()
+        self.input_file_name.setText(self.file_path)
+=======
+>>>>>>> 92e8db092ee57b49beee214bbc667d3d85e9d394
 
     #---------------------------------------------EVENTS-------------------------------------------------#
 
@@ -318,7 +332,7 @@ class MainWindow(QMainWindow):
         pass
 
     def file_option_event(self):
-        pass
+        print("i was pressed")
 
         self.text_input.setPlainText("")
 
@@ -346,7 +360,7 @@ class MainWindow(QMainWindow):
 
 
     def AES_encrypt(self):
-        
+       
         if self.check_if_input_is_empty() == False:
 
             if self.check_if_input_is_hex() == False:
@@ -354,17 +368,25 @@ class MainWindow(QMainWindow):
                 if self.check_if_key_is_empty() == False:
 
                     if self.check_if_key_is_hex() == True:
+                        
+                        if self.file_encrypt_option.isChecked() == True:
+                            
+                            inputtext = self.file_input_content
+                            encrypted_input = self.AES_Cipher.encrypt(string_to_bytestring(inputtext))               #encrypt the converted input text
+                            self.file_input.overwrite_all_bytes(byte_string_to_hex_string(encrypted_input))
+                            #self.text_output.setPlainText(byte_string_to_hex_string(encrypted_input)) 
 
-                        inputtext = self.text_input.toPlainText()                                                #get input from input field
-                        encrypted_input = self.AES_Cipher.encrypt(string_to_bytestring(inputtext))               #encrypt the converted input text
-                        self.text_output.setPlainText(byte_string_to_hex_string(encrypted_input))                #stringing the bytestring to make it possible to put it inot the qplaintextedit
+                        else:
+                            inputtext = self.text_input.toPlainText()                                                #get input from input field
+                            encrypted_input = self.AES_Cipher.encrypt(string_to_bytestring(inputtext))               #encrypt the converted input text
+                            self.text_output.setPlainText(byte_string_to_hex_string(encrypted_input))                #stringing the bytestring to make it possible to put it inot the qplaintextedit
             
                 else:
                     self.error_message("Please Input a Key first.")
             else:
                 self.error_message("Please Input a non encryptet Text")  
         else:
-            self.error_message("Please Input a Text")
+            self.error_message("Please Input a Text / File")
 
     def AES_decrypt(self):
 
@@ -446,11 +468,20 @@ class MainWindow(QMainWindow):
     #--------------------------------------input checks---------------------------------------------------#
 
     def check_if_input_is_hex(self):
-        input = self.text_input.toPlainText()
-        if input[0:2] == "0x":
-            return True
+
+        if self.file_encrypt_option.isChecked():
+            input = self.file_input_content
+            if input[0:2] == "0x":
+                return True
+            else:
+                return False            
+
         else:
-            return False
+            input = self.text_input.toPlainText()
+            if input[0:2] == "0x":
+                return True
+            else:
+                return False
 
     def check_if_key_is_hex(self):
         input = self.key_input.toPlainText()
@@ -459,11 +490,22 @@ class MainWindow(QMainWindow):
         else:
             return False
     
-    def check_if_input_is_empty(self): 
-        if self.text_input.toPlainText() == "":
-            return True
-        else:
-            return False
+    def check_if_input_is_empty(self):
+
+        if self.file_encrypt_option.isChecked() == True:
+            if self.file_path == "":
+                print("File path but empty one:", self.file_path)
+                return True
+            else:
+                print("File path:", self.file_input.get_file_name())
+                return False
+
+        
+        elif self.text_encrypt_option.isChecked() == True:
+            if self.text_input.toPlainText() == "":
+                return True
+            else:
+                return False
 
 
 #------------------------------------------main program---------------------------------------------------#      
