@@ -80,6 +80,7 @@ class MainWindow(QMainWindow):
 
         self.file_encrypt_option = QRadioButton(self.horizontalLayoutWidget)
         self.file_encrypt_option.clicked.connect(self.file_option_event)
+        self.file_encrypt_option.setChecked(True)
         self.horizontalLayout.addWidget(self.file_encrypt_option)
 
         self.text_encrypt_option = QRadioButton(self.horizontalLayoutWidget)
@@ -146,6 +147,7 @@ class MainWindow(QMainWindow):
         self.horizontalLayoutWidget_2 = QWidget(self.centralwidget)
         self.horizontalLayoutWidget_2.setGeometry(QtCore.QRect(80, 320, 871, 57))
         self.rsa_option = QRadioButton(self.horizontalLayoutWidget_2)
+        self.rsa_option.setChecked(True)
 
         self.horizontalLayout_2 = QHBoxLayout(self.horizontalLayoutWidget_2)
         self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
