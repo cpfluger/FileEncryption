@@ -211,16 +211,12 @@ class MainWindow(QMainWindow, Drag_DropArea):
     def AES_encrypt(self):
         
         if self.check_if_input_is_empty() == False:
-            print("input is not empty")
 
             if self.check_if_input_is_hex() == False:
-                print("input is not hex")
 
                 if self.check_if_key_is_empty() == False:
-                    print("key is not empty")
 
                     if self.check_if_key_is_hex() == True:
-                        print("key is Hex")
 
                         inputtext = self.text_input.toPlainText()                                                #get input from input field
                         encrypted_input = self.AES_Cipher.encrypt(string_to_bytestring(inputtext))               #encrypt the converted input text
@@ -270,21 +266,6 @@ class MainWindow(QMainWindow, Drag_DropArea):
  
     #-----------------------------------------Key Operations-------------------------------------------#
 
-
- 
-    # def check_if_key_is_empty(self):
-
-    #     if self.key_input.toPlainText() == "":
-    #         self.error_message("Pls generate a Key first, or insert a valid one yourself!")
-    #         return False
-
-    #     elif self.check_if_key_is_hex() == True:
-    #         self.error_message("Working with your Key :)")
-    #         print("i am here")
-    #         self.aes_working_key = hex_string_to_byte_string( self.key_input.toPlainText())
-    #         self.AES_Cipher = AES_Cipher(self.aes_working_key, self.aes_working_key)
-    #         return True
-
     def check_if_key_is_empty(self):
 
         if self.key_input.toPlainText() == "":
@@ -298,7 +279,7 @@ class MainWindow(QMainWindow, Drag_DropArea):
                 return False
             
             elif self.check_if_key_is_hex() == True:
-                self.error_message("Working with your Key :)")
+                self.error_message("Working with the given Key")
                 self.aes_working_key = hex_string_to_byte_string( self.key_input.toPlainText())
                 self.AES_Cipher = AES_Cipher(self.aes_working_key, self.aes_working_key)
                 return False
