@@ -1,7 +1,11 @@
-import qdarktheme
+import Conversion
 from PyQt5.QtWidgets import *
-import sys
-from gui import MainWindow
+from PyQt5 import QtGui
+from Conversion import *
+from AES import AES_Cipher, AESKeyGeneration
+from RSA import *
+import qdarktheme
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

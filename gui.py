@@ -43,7 +43,7 @@ class MainWindow(QMainWindow):
 
         self.verticalLayoutWidget_3 = QWidget(self.centralwidget)
         self.verticalLayoutWidget_3.setGeometry(QtCore.QRect(520, 150, 251, 112))
- 
+
 
         self.verticalLayout_3 = QVBoxLayout(self.verticalLayoutWidget_3)
         self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
@@ -54,7 +54,7 @@ class MainWindow(QMainWindow):
 
         self.text_input = QPlainTextEdit(self.verticalLayoutWidget_3)
         self.verticalLayout_3.addWidget(self.text_input)
-        
+
 
         self.topline = QFrame(self.centralwidget)
         self.topline.setGeometry(QtCore.QRect(0, 60, 1011, 20))
@@ -90,6 +90,11 @@ class MainWindow(QMainWindow):
         self.Drag_DropArea = QListWidget(self.centralwidget)
         self.Drag_DropArea.setGeometry(QtCore.QRect(90, 160, 256, 91))
         self.setAcceptDrops(True)
+        self.setGeometry(550, 50, 300, 200)
+
+    def initUI(self):
+        self.centerlabel = QLabel(self)
+        self.centerlabel.setGeometry(80, 30, 50, 50)
         self.setAutoFillBackground(True)
 
         self.centerlabel = QLabel(self.centralwidget)
@@ -117,7 +122,7 @@ class MainWindow(QMainWindow):
         self.header_2.setFont(font)
 
 
-        
+
         self.key_input = QTextEdit(self.centralwidget)
         self.key_input.setGeometry(QtCore.QRect(520, 400, 261, 40))
         self.key_input.setReadOnly(False)
@@ -267,7 +272,12 @@ class MainWindow(QMainWindow):
         files = [u.toLocalFile() for u in event.mimeData().urls()]
         for f in files:
             print(f)
-    
+
+
+    def submit_encrypt(self):
+        self.mytext = self.text_input.toPlainText()
+
+
     #---------------------------------EVENTS-------------------------------------------#
 
     def encrypt_event(self):
@@ -284,13 +294,13 @@ class MainWindow(QMainWindow):
             self.RSA_decrypt()
         elif self.aes_option.isChecked():
             self.AES_decrypt()
-
+    
     def darkmode_event(self):
         if self.darkmode_btn.isChecked():
             app.setStyleSheet(qdarktheme.load_stylesheet("light"))
             self.pixmap = QtGui.QPixmap('images/download1.png')
             self.centerlabel.setPixmap(self.pixmap)
-            
+
 
         else:
             app.setStyleSheet(qdarktheme.load_stylesheet())
@@ -299,7 +309,7 @@ class MainWindow(QMainWindow):
 
     def generate_key(self):
         if self.rsa_option.isChecked():
-            pass
+            self.generate_rsa_key()
 
         elif self.aes_option.isChecked():
             self.generate_aes_key()
@@ -314,6 +324,9 @@ class MainWindow(QMainWindow):
     def file_option_event(self):
         pass
 
+    def file_changed_event(self):
+        pass
+
     def delete_input_event(self):
         self.text_input.setPlainText("")
 
@@ -324,12 +337,16 @@ class MainWindow(QMainWindow):
     def AES_encrypt(self):
         
         if self.check_if_input_is_empty() == False:
+            print("input is not empty")
 
             if self.check_if_input_is_hex() == False:
+                print("input is not hex")
 
                 if self.check_if_key_is_empty() == False:
+                    print("key is not empty")
 
                     if self.check_if_key_is_hex() == True:
+                        print("key is Hex")
 
                         inputtext = self.text_input.toPlainText()                                                #get input from input field
                         encrypted_input = self.AES_Cipher.encrypt(string_to_bytestring(inputtext))               #encrypt the converted input text
@@ -341,6 +358,7 @@ class MainWindow(QMainWindow):
                 self.error_message("Please Input a non encryptet Text")  
         else:
             self.error_message("Please Input a Text")
+
 
     def AES_decrypt(self):
 
@@ -356,7 +374,7 @@ class MainWindow(QMainWindow):
                         mytext = self.AES_Cipher.decrypt(hex_string_to_byte_string(encrypted_txt))
                         self.text_output.setPlainText(bytestring_to_string(mytext))
                 else:
-                    self.error_message("Please Input a Key first.")            
+                    self.error_message("Please Input a Key first.")
             else:
                 self.error_message("Please input an encrypted text")
 
@@ -364,16 +382,46 @@ class MainWindow(QMainWindow):
             self.error_message("Please Input a Text")
 
     def RSA_encrypt(self):
-        inputtext = self.text_input.toPlainText()
-        encrypted_input = self.RSA.encrypt(ascii_string_to_decimal(inputtext))
-        self.text_output.setPlainText(decimal_array_to_hex_string(encrypted_input))
+        if self.file_encrypt_option.isChecked():
+            inputtext = self.file_handler.read_all_bytes()
+            encrypted_input = self.RSA.encrypt(ascii_string_to_decimal(inputtext))
+            self.file_handler.overwrite_all_bytes(decimal_array_to_hex_string(encrypted_input))
+
+        elif self.text_encrypt_option.isChecked() or True:
+            inputtext = self.text_input.toPlainText()
+            encrypted_input = self.RSA.encrypt(ascii_string_to_decimal(inputtext))
+            self.text_output.setPlainText(decimal_array_to_hex_string(encrypted_input))
+
 
     def RSA_decrypt(self):
-        encrypted_text = self.text_output.toPlainText()
-        decrypted_text = self.RSA.decrypt(hex_string_to_decimal_array(encrypted_text))
-        self.text_input.setPlainText(decimal_array_to__ascii_string(decrypted_text))
+        if self.file_encrypt_option.isChecked():
+            encrypted_text = self.file_handler.read_all_bytes()
+            decrypted_text = self.RSA.decrypt(hex_string_to_decimal_array(encrypted_text))
+            self.file_handler.overwrite_all_bytes(decimal_array_to_hex_string(decrypted_text))
 
+        elif self.text_encrypt_option.isChecked() or True:
+            encrypted_text = self.text_output.toPlainText()
+            decrypted_text = self.RSA.decrypt(hex_string_to_decimal_array(encrypted_text))
+            self.text_input.setPlainText(decimal_array_to__ascii_string(decrypted_text))
+
+
+ 
     #-----------------------------------------Key Operations-------------------------------------------#
+
+
+ 
+    # def check_if_key_is_empty(self):
+
+    #     if self.key_input.toPlainText() == "":
+    #         self.error_message("Pls generate a Key first, or insert a valid one yourself!")
+    #         return False
+
+    #     elif self.check_if_key_is_hex() == True:
+    #         self.error_message("Working with your Key :)")
+    #         print("i am here")
+    #         self.aes_working_key = hex_string_to_byte_string( self.key_input.toPlainText())
+    #         self.AES_Cipher = AES_Cipher(self.aes_working_key, self.aes_working_key)
+    #         return True
 
     def check_if_key_is_empty(self):
 
@@ -393,6 +441,7 @@ class MainWindow(QMainWindow):
                 self.AES_Cipher = AES_Cipher(self.aes_working_key, self.aes_working_key)
                 return False
 
+
     def generate_aes_key(self):
 
         if self.check_if_input_is_hex() == True:
@@ -401,22 +450,31 @@ class MainWindow(QMainWindow):
         else:
             self.aes_key = AESKeyGeneration()
             self.aes_key.key_generate()
-            self.AES_Cipher = AES_Cipher(self.aes_key.get_key(), self.aes_key.get_key())    
+            self.AES_Cipher = AES_Cipher(self.aes_key.get_key(), self.aes_key.get_key())
             self.key_input.setPlainText(byte_string_to_hex_string(self.aes_key.get_key()))
-            self.error_message("Key successfully generated")
+            self.error_message("AES-Key successfully generated")
 
         self.key_input.toPlainText()
 
-    def check_key_rsa(self):
-        if self.key_input.toPlainText() == "":
-            print("generating Key")
-            self.RSA_Key = RSAKeyGenerator()
-            self.RSA_Key.load_generator(265)
-            self.RSA = RSA(self.RSA_Key.get_public_key(), self.RSA_Key.get_private_key())
+    def generate_rsa_key(self):
+        self.RSA_Key = RSAKeyGenerator()
+        self.RSA_Key.load_generator(265)
+        self.RSA = RSA(self.RSA_Key.get_public_key(), self.RSA_Key.get_private_key())
+        self.key_input.setPlainText(hex(self.RSA_Key.get_public_key().get_key_specific_number()))
+        self.key_output.setPlainText(hex(self.RSA_Key.get_private_key().get_key_specific_number()))
+        self.public_key.setPlainText(hex(self.RSA_Key.get_private_key().get_prime_number_product()))
+        self.error_message("RSA-Key successfully generated")
 
-        elif "0x" in self.key_input.toPlainText() and "0x" in self.key_input.toPlainText():
-            print("taking your key")
-            self.RSA = RSA(123, 123) #temporary
+
+    def check_key_rsa(self):
+        if self.key_input.toPlainText() == "" and self.key_output.toPlainText() == "" and self.public_key.toPlainText() == "":
+            self.error_message("Generate a Key or insert one yourself")
+            return False
+
+        elif "0x" in self.key_input.toPlainText() and "0x" in self.key_output.toPlainText() and "0x" in self.public_key.toPlainText():
+            self.RSA = RSA(RSAKeyModel(self.public_key.toPlainText(), self.key_input.toPlainText()), RSAKeyModel(self.public_key.toPlainText(), self.key_output.toPlainText()))
+            self.error_message("Working with your RSA Key")
+            return True
 
 
     #------------------------------------------mischeläneus Methods---------------------------------------------------#
@@ -442,7 +500,7 @@ class MainWindow(QMainWindow):
             return False
 
 
-            
+
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     app.setStyleSheet(qdarktheme.load_stylesheet())
