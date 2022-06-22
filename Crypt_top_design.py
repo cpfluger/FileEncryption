@@ -13,10 +13,3 @@ class Cryptography():
 
     def get_private_key(self):
         return self._private_key
-
-
-class KeyGenerator():
-
-    def __init__(self):
-        pass
-

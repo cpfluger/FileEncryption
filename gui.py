@@ -264,7 +264,7 @@ class MainWindow(QMainWindow):
         self.text_input.setPlaceholderText("Input your text here...")
 
 
-    def fillToolTipps(self,):
+    def fillToolTipps(self):
         self.rsa_option.setToolTip("Choose RSA encryption")
         self.decrypt_btn.setToolTip("Press Button to decrypt")
         self.encrypt_btn.setToolTip("Press Button to encrypt")
@@ -320,7 +320,6 @@ class MainWindow(QMainWindow):
     def file_option_event(self):
         pass
 
-    def delete_input_event(self):
         self.text_input.setPlainText("")
 
     def dragEnterEvent(self, event):
