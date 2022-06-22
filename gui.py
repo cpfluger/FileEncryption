@@ -265,29 +265,49 @@ class MainWindow(QMainWindow):
 
     #--------------------------------Encrypt & Decrypt---------------------------------#  
       
+
+
     def AES_encrypt(self):
         
-        if self.check_key_status() == True:
-            
-            if self.check_if_input_is_hex() == True:
-                print("pls input a non encrypted text")
+        if self.check_if_input_is_empty() == False:
 
+            if self.check_if_input_is_hex() == False:
+
+                if self.check_if_key_is_empty() == False:
+
+                    if self.check_if_key_is_hex() == True:
+
+                        inputtext = self.text_input.toPlainText()                                                #get input from input field
+                        encrypted_input = self.AES_Cipher.encrypt(string_to_bytestring(inputtext))               #encrypt the converted input text
+                        self.text_output.setPlainText(byte_string_to_hex_string(encrypted_input))                #stringing the bytestring to make it possible to put it inot the qplaintextedit
+            
+                else:
+                    self.error_message("Please Input a Key first.")
             else:
-                inputtext = self.text_input.toPlainText()                                                #get input from input field
-                encrypted_input = self.AES_Cipher.encrypt(string_to_bytestring(inputtext))               #encrypt the converted input text
-                self.text_output.setPlainText(byte_string_to_hex_string(encrypted_input))                #stringing the bytestring to make it possible to put it inot the qplaintextedit
+                self.error_message("Please Input a non encryptet Text")  
+        else:
+            self.error_message("Please Input a Text")
 
     def AES_decrypt(self):
 
-        if self.check_key_status() == True:
+        if self.check_if_input_is_empty() == False:
 
-            if self.check_if_input_is_hex() == False:
-                print("pls input an encrypted text")
+            if self.check_if_input_is_hex() == True:
+    
+                if self.check_if_key_is_empty() == False:
 
+                    if self.check_if_key_is_hex() == True:
+
+                        encrypted_txt = self.text_input.toPlainText()                                      #write output to field  output = string b'\xFF'
+                        mytext = self.AES_Cipher.decrypt(hex_string_to_byte_string(encrypted_txt))
+                        self.text_output.setPlainText(bytestring_to_string(mytext))
+                else:
+                    self.error_message("Please Input a Key first.")            
             else:
-                encrypted_txt = self.text_input.toPlainText()                                      #write output to field  output = string b'\xFF'
-                mytext = self.AES_Cipher.decrypt(hex_string_to_byte_string(encrypted_txt))
-                self.text_output.setPlainText(bytestring_to_string(mytext))
+                self.error_message("Please input an encrypted text")
+
+        else:
+            self.error_message("Please Input a Text")
 
     def RSA_encrypt(self):
         inputtext = self.text_input.toPlainText()
@@ -301,22 +321,37 @@ class MainWindow(QMainWindow):
 
     #-----------------------------------------Key Operations-------------------------------------------#
 
-    def check_key_status(self):
+    def check_if_key_is_empty(self):
 
         if self.key_input.toPlainText() == "":
-            self.error_message("Pls generate a Key first, or insert one yourself!")
-            return False
-
-        else:
-            self.error_message("Working with your Key :)")
+            self.error_message("Pls generate a Key first, or insert a valid one yourself!")
             return True
 
+        else:
+            if self.check_if_key_is_hex() == False:
+                
+                self.error_message("Please input a hex key")
+                return False
+            
+            elif self.check_if_key_is_hex() == True:
+                self.error_message("Working with the given Key")
+                self.aes_working_key = hex_string_to_byte_string( self.key_input.toPlainText())
+                self.AES_Cipher = AES_Cipher(self.aes_working_key, self.aes_working_key)
+                return False
+
     def generate_aes_key(self):
+
+        if self.check_if_input_is_hex() == True:
+            self.error_message("You can't generate a Key when you want to decrypt")
+        
+        else:
             self.aes_key = AESKeyGeneration()
             self.aes_key.key_generate()
             self.AES_Cipher = AES_Cipher(self.aes_key.get_key(), self.aes_key.get_key())    
             self.key_input.setPlainText(byte_string_to_hex_string(self.aes_key.get_key()))
             self.error_message("Key successfully generated")
+
+        self.key_input.toPlainText()
 
     def check_key_rsa(self):
         if self.key_input.toPlainText() == "":
@@ -333,13 +368,24 @@ class MainWindow(QMainWindow):
     #------------------------------------------mischeläneus Methods---------------------------------------------------#
 
     def check_if_input_is_hex(self):
-
         input = self.text_input.toPlainText()
         if input[0:2] == "0x":
             return True
         else:
             return False
 
+    def check_if_key_is_hex(self):
+        input = self.key_input.toPlainText()
+        if input[0:2] == "0x":
+            return True
+        else:
+            return False
+    
+    def check_if_input_is_empty(self): 
+        if self.text_input.toPlainText() == "":
+            return True
+        else:
+            return False
 
 
             
