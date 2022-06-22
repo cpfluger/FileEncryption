@@ -1,4 +1,3 @@
-from msilib.schema import File
 from Conversion import *
 from AES import AES_Cipher, AESKeyGeneration
 from RSA import *
@@ -17,6 +16,18 @@ class MainWindow(QMainWindow):
 
 
     def initUI(self, FileEncryption):
+
+        #----------Fonts------------
+        headingfont = QtGui.QFont()
+        headingfont.setPointSize(10)
+        headingfont.setBold(True)
+        headingfont.setWeight(75)
+
+        basicfont = QtGui.QFont()
+        basicfont.setPointSize(10)
+        basicfont.setBold(False)
+        basicfont.setWeight(50)
+
         FileEncryption.setObjectName("FileEncryption")
         FileEncryption.resize(1000, 700)
         FileEncryption.setMaximumSize(1000, 700)
@@ -43,18 +54,19 @@ class MainWindow(QMainWindow):
 
         self.verticalLayoutWidget_3 = QWidget(self.centralwidget)
         self.verticalLayoutWidget_3.setGeometry(QtCore.QRect(520, 150, 251, 112))
-
+ 
 
         self.verticalLayout_3 = QVBoxLayout(self.verticalLayoutWidget_3)
         self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
 
 
         self.text_input_label = QLabel(self.verticalLayoutWidget_3)
+        self.text_input_label.setFont(basicfont)
         self.verticalLayout_3.addWidget(self.text_input_label)
 
         self.text_input = QPlainTextEdit(self.verticalLayoutWidget_3)
         self.verticalLayout_3.addWidget(self.text_input)
-
+        
 
         self.topline = QFrame(self.centralwidget)
         self.topline.setGeometry(QtCore.QRect(0, 60, 1011, 20))
@@ -67,34 +79,40 @@ class MainWindow(QMainWindow):
 
         self.browse_btn = QPushButton(self.centralwidget)
         self.browse_btn.setGeometry(QtCore.QRect(90, 260, 93, 28))
+        self.browse_btn.setFont(basicfont)
         self.browse_btn.clicked.connect(self.browsefiles)
 
-
-        self.horizontalLayoutWidget = QWidget(self.centralwidget)
+        self.horizontalLayoutWidget = QtWidgets.QWidget(self.centralwidget)
         self.horizontalLayoutWidget.setGeometry(QtCore.QRect(80, 80, 871, 51))
-
-
-        self.horizontalLayout = QHBoxLayout(self.horizontalLayoutWidget)
+        self.horizontalLayoutWidget.setObjectName("horizontalLayoutWidget")
+        self.horizontalLayout = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget)
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
-
-
+        self.horizontalLayout.setObjectName("horizontalLayout")
         self.file_encrypt_option = QRadioButton(self.horizontalLayoutWidget)
-        self.file_encrypt_option.clicked.connect(self.file_option_event)
-        self.file_encrypt_option.setChecked(True)
+
         self.horizontalLayout.addWidget(self.file_encrypt_option)
 
+        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout.addItem(spacerItem)
+
         self.text_encrypt_option = QRadioButton(self.horizontalLayoutWidget)
-        self.text_encrypt_option.clicked.connect(self.text_option_event)
+        
         self.horizontalLayout.addWidget(self.text_encrypt_option)
+        spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout.addItem(spacerItem1)
+
+        self.file_encrypt_option.setFont(headingfont)
+        self.file_encrypt_option.clicked.connect(self.file_option_event)
+        self.file_encrypt_option.setChecked(True)
+
+
+        self.text_encrypt_option.setFont(headingfont)
+        self.text_encrypt_option.clicked.connect(self.text_option_event)
+
 
         self.Drag_DropArea = QListWidget(self.centralwidget)
         self.Drag_DropArea.setGeometry(QtCore.QRect(90, 160, 256, 91))
         self.setAcceptDrops(True)
-        self.setGeometry(550, 50, 300, 200)
-
-    def initUI(self):
-        self.centerlabel = QLabel(self)
-        self.centerlabel.setGeometry(80, 30, 50, 50)
         self.setAutoFillBackground(True)
 
         self.centerlabel = QLabel(self.centralwidget)
@@ -122,7 +140,7 @@ class MainWindow(QMainWindow):
         self.header_2.setFont(font)
 
 
-
+        
         self.key_input = QTextEdit(self.centralwidget)
         self.key_input.setGeometry(QtCore.QRect(520, 400, 261, 40))
         self.key_input.setReadOnly(False)
@@ -133,43 +151,66 @@ class MainWindow(QMainWindow):
         self.text_output.setReadOnly(True)
 
         self.input_file_name = QLabel(self.centralwidget)
+        self.input_file_name.setFont(basicfont)
         self.input_file_name.setGeometry(QtCore.QRect(210, 260, 250, 30))
 
         self.darkmode_btn = QPushButton(self.centralwidget)
         self.darkmode_btn.setGeometry(QtCore.QRect(580, 20, 121, 31))
+        self.darkmode_btn.setFont(basicfont)
         self.darkmode_btn.clicked.connect(self.darkmode_event)
         self.darkmode_btn.setCheckable(True)
 
         self.encrypt_btn = QPushButton(self.centralwidget)
         self.encrypt_btn.setGeometry(QtCore.QRect(440, 520, 121, 41))
+        self.encrypt_btn.setFont(headingfont)
         self.encrypt_btn.clicked.connect(self.encrypt_event)
 
 
         self.decrypt_btn = QPushButton(self.centralwidget)
         self.decrypt_btn.setGeometry(QtCore.QRect(720, 520, 121, 41))
+        self.decrypt_btn.setFont(headingfont)
         self.decrypt_btn.clicked.connect(self.decrypt_event)
 
-        self.horizontalLayoutWidget_2 = QWidget(self.centralwidget)
-        self.horizontalLayoutWidget_2.setGeometry(QtCore.QRect(80, 320, 871, 57))
-        self.rsa_option = QRadioButton(self.horizontalLayoutWidget_2)
-        self.rsa_option.setChecked(True)
-
-        self.horizontalLayout_2 = QHBoxLayout(self.horizontalLayoutWidget_2)
+        self.horizontalLayoutWidget_2 = QtWidgets.QWidget(self.centralwidget)
+        self.horizontalLayoutWidget_2.setGeometry(QtCore.QRect(80, 320, 871, 61))
+        self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget_2)
         self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+
+        spacerItem2 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.rsa_option = QtWidgets.QRadioButton(self.horizontalLayoutWidget_2)
+        self.rsa_option.setFont(basicfont)
+        self.rsa_option.setChecked(True)
         self.horizontalLayout_2.addWidget(self.rsa_option)
+        self.horizontalLayout_2.addItem(spacerItem2)
 
-        spacerItem = QSpacerItem(220, 20, QSizePolicy.Fixed, QSizePolicy.Minimum)
-        self.horizontalLayout_2.addItem(spacerItem)
-
-        self.aes_option = QRadioButton(self.horizontalLayoutWidget_2)
+        self.aes_option = QtWidgets.QRadioButton(self.horizontalLayoutWidget_2)
+        self.aes_option.setFont(basicfont)
         self.horizontalLayout_2.addWidget(self.aes_option)
+        spacerItem3 = QtWidgets.QSpacerItem(100, 50, QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_2.addItem(spacerItem3)
+        
 
-        self.generate_key_button = QPushButton(self.horizontalLayoutWidget_2)
-        self.horizontalLayout_2.addWidget(self.generate_key_button)
+
+        
+
+
+        
+
+
+
+
+        self.generate_key_button = QtWidgets.QPushButton(self.horizontalLayoutWidget_2)
+        self.generate_key_button.setFont(headingfont)
         self.generate_key_button.clicked.connect(self.generate_key)
+
+        self.horizontalLayout_2.addWidget(self.generate_key_button)
+        spacerItem4 = QtWidgets.QSpacerItem(70, 20, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_2.addItem(spacerItem4)
 
         self.aes_label = QLabel(self.centralwidget)
         self.aes_label.setGeometry(QtCore.QRect(520, 380, 131, 16))
+        self.aes_label.setFont(basicfont)
 
         self.key_input2 = QTextEdit(self.centralwidget)
         self.key_input2.setGeometry(QtCore.QRect(80, 400, 261, 40))
@@ -187,6 +228,7 @@ class MainWindow(QMainWindow):
         self.public_key.setTextInteractionFlags(QtCore.Qt.TextEditorInteraction)
 
         self.error_box = QLabel(self.centralwidget)
+        self.error_box.setFont(basicfont)
         self.error_box.setGeometry(QtCore.QRect(440, 480, 401, 21))
 
         FileEncryption.setCentralWidget(self.centralwidget)
@@ -195,25 +237,8 @@ class MainWindow(QMainWindow):
 
         self.fillUi(FileEncryption)
         self.fillToolTipps(FileEncryption)
-        self.settaborder(FileEncryption)
         QtCore.QMetaObject.connectSlotsByName(FileEncryption)
 
-    def settaborder(self, FileEncryption):
-        FileEncryption.setTabOrder(self.file_encrypt_option, self.browse_btn)
-        FileEncryption.setTabOrder(self.browse_btn, self.text_encrypt_option)
-        FileEncryption.setTabOrder(self.text_encrypt_option, self.text_input)
-        FileEncryption.setTabOrder(self.text_input, self.rsa_option)
-        FileEncryption.setTabOrder(self.rsa_option, self.key_input2)
-        FileEncryption.setTabOrder(self.key_input2, self.key_output)
-        FileEncryption.setTabOrder(self.key_output, self.public_key)
-        FileEncryption.setTabOrder(self.public_key, self.aes_option)
-        FileEncryption.setTabOrder(self.aes_option, self.generate_key_button)
-        FileEncryption.setTabOrder(self.generate_key_button, self.key_input)
-        FileEncryption.setTabOrder(self.key_input, self.encrypt_btn)
-        FileEncryption.setTabOrder(self.encrypt_btn, self.decrypt_btn)
-        FileEncryption.setTabOrder(self.decrypt_btn, self.darkmode_btn)
-        FileEncryption.setTabOrder(self.darkmode_btn, self.text_output)
-        FileEncryption.setTabOrder(self.text_output, self.Drag_DropArea)
 
     def fillUi(self, FileEncryption):
         _translate = QtCore.QCoreApplication.translate
@@ -235,10 +260,11 @@ class MainWindow(QMainWindow):
         self.public_key.setPlaceholderText("3. Feld")
         self.key_output.setPlaceholderText("2. Feld")
         self.text_output.setPlaceholderText("Your decrypted text will spawn here...")
-        self.key_input.setPlaceholderText("1. Feld")
+        self.key_input.setPlaceholderText("Generated Key")
         self.text_input.setPlaceholderText("Input your text here...")
 
-    def fillToolTipps(self, FileEncryption):
+
+    def fillToolTipps(self):
         self.rsa_option.setToolTip("Choose RSA encryption")
         self.decrypt_btn.setToolTip("Press Button to decrypt")
         self.encrypt_btn.setToolTip("Press Button to encrypt")
@@ -247,38 +273,8 @@ class MainWindow(QMainWindow):
         self.text_input.setToolTip("Copy your key here")
         self.browse_btn.setToolTip("Open File Explorer")
 
-    def browsefiles(self):
-        self.temp_path = QFileDialog.getOpenFileName(self, "Open File")
-        print(self.temp_path[0])
-        self.input_file_name.setText(self.temp_path[0])
 
-    def submit_encrypt(self):
-        self.mytext = self.text_input.toPlainText()
-
-    def dragEnterEvent(self, event):
-        if event.mimeData().hasUrls:
-            event.accept()
-        else:
-            event.ignore()
-
-    def dragMoveEvent(self, event):
-        if event.mimeData().hasUrls():
-            event.setDropAction(Qt.CopyAction)
-            event.accept()
-        else:
-            event.ignore()
-
-    def dropEvent(self, event):
-        files = [u.toLocalFile() for u in event.mimeData().urls()]
-        for f in files:
-            print(f)
-
-
-    def submit_encrypt(self):
-        self.mytext = self.text_input.toPlainText()
-
-
-    #---------------------------------EVENTS-------------------------------------------#
+    #---------------------------------------------EVENTS-------------------------------------------------#
 
     def encrypt_event(self):
         self.text_output.setPlainText("")
@@ -294,13 +290,13 @@ class MainWindow(QMainWindow):
             self.RSA_decrypt()
         elif self.aes_option.isChecked():
             self.AES_decrypt()
-    
+
     def darkmode_event(self):
         if self.darkmode_btn.isChecked():
             app.setStyleSheet(qdarktheme.load_stylesheet("light"))
             self.pixmap = QtGui.QPixmap('images/download1.png')
             self.centerlabel.setPixmap(self.pixmap)
-
+            
 
         else:
             app.setStyleSheet(qdarktheme.load_stylesheet())
@@ -309,7 +305,7 @@ class MainWindow(QMainWindow):
 
     def generate_key(self):
         if self.rsa_option.isChecked():
-            self.generate_rsa_key()
+            pass
 
         elif self.aes_option.isChecked():
             self.generate_aes_key()
@@ -320,33 +316,44 @@ class MainWindow(QMainWindow):
 
     def text_option_event(self):
         pass
-    
+
     def file_option_event(self):
         pass
 
-    def file_changed_event(self):
-        pass
-
-    def delete_input_event(self):
         self.text_input.setPlainText("")
 
-    #--------------------------------Encrypt & Decrypt---------------------------------#  
+    def dragEnterEvent(self, event):
+        if event.mimeData().hasUrls:
+            event.accept()
+        else:
+            event.ignore()
+
+    def dropEvent(self, event):
+        files = [u.toLocalFile() for u in event.mimeData().urls()]
+        for f in files:
+            print(f)
+
+    def browsefiles(self):
+        self.temp_path = QFileDialog.getOpenFileName(self, "Open File")
+        print(self.temp_path[0])
+        self.input_file_name.setText(self.temp_path[0])
+
+    def submit_encrypt(self):
+        self.mytext = self.text_input.toPlainText()
+
+    #----------------------------------------Encrypt & Decrypt--------------------------------------------#  
       
 
 
     def AES_encrypt(self):
         
         if self.check_if_input_is_empty() == False:
-            print("input is not empty")
 
             if self.check_if_input_is_hex() == False:
-                print("input is not hex")
 
                 if self.check_if_key_is_empty() == False:
-                    print("key is not empty")
 
                     if self.check_if_key_is_hex() == True:
-                        print("key is Hex")
 
                         inputtext = self.text_input.toPlainText()                                                #get input from input field
                         encrypted_input = self.AES_Cipher.encrypt(string_to_bytestring(inputtext))               #encrypt the converted input text
@@ -358,7 +365,6 @@ class MainWindow(QMainWindow):
                 self.error_message("Please Input a non encryptet Text")  
         else:
             self.error_message("Please Input a Text")
-
 
     def AES_decrypt(self):
 
@@ -374,7 +380,7 @@ class MainWindow(QMainWindow):
                         mytext = self.AES_Cipher.decrypt(hex_string_to_byte_string(encrypted_txt))
                         self.text_output.setPlainText(bytestring_to_string(mytext))
                 else:
-                    self.error_message("Please Input a Key first.")
+                    self.error_message("Please Input a Key first.")            
             else:
                 self.error_message("Please input an encrypted text")
 
@@ -382,46 +388,16 @@ class MainWindow(QMainWindow):
             self.error_message("Please Input a Text")
 
     def RSA_encrypt(self):
-        if self.file_encrypt_option.isChecked():
-            inputtext = self.file_handler.read_all_bytes()
-            encrypted_input = self.RSA.encrypt(ascii_string_to_decimal(inputtext))
-            self.file_handler.overwrite_all_bytes(decimal_array_to_hex_string(encrypted_input))
-
-        elif self.text_encrypt_option.isChecked() or True:
-            inputtext = self.text_input.toPlainText()
-            encrypted_input = self.RSA.encrypt(ascii_string_to_decimal(inputtext))
-            self.text_output.setPlainText(decimal_array_to_hex_string(encrypted_input))
-
+        inputtext = self.text_input.toPlainText()
+        encrypted_input = self.RSA.encrypt(ascii_string_to_decimal(inputtext))
+        self.text_output.setPlainText(decimal_array_to_hex_string(encrypted_input))
 
     def RSA_decrypt(self):
-        if self.file_encrypt_option.isChecked():
-            encrypted_text = self.file_handler.read_all_bytes()
-            decrypted_text = self.RSA.decrypt(hex_string_to_decimal_array(encrypted_text))
-            self.file_handler.overwrite_all_bytes(decimal_array_to_hex_string(decrypted_text))
+        encrypted_text = self.text_output.toPlainText()
+        decrypted_text = self.RSA.decrypt(hex_string_to_decimal_array(encrypted_text))
+        self.text_input.setPlainText(decimal_array_to__ascii_string(decrypted_text))
 
-        elif self.text_encrypt_option.isChecked() or True:
-            encrypted_text = self.text_output.toPlainText()
-            decrypted_text = self.RSA.decrypt(hex_string_to_decimal_array(encrypted_text))
-            self.text_input.setPlainText(decimal_array_to__ascii_string(decrypted_text))
-
-
- 
-    #-----------------------------------------Key Operations-------------------------------------------#
-
-
- 
-    # def check_if_key_is_empty(self):
-
-    #     if self.key_input.toPlainText() == "":
-    #         self.error_message("Pls generate a Key first, or insert a valid one yourself!")
-    #         return False
-
-    #     elif self.check_if_key_is_hex() == True:
-    #         self.error_message("Working with your Key :)")
-    #         print("i am here")
-    #         self.aes_working_key = hex_string_to_byte_string( self.key_input.toPlainText())
-    #         self.AES_Cipher = AES_Cipher(self.aes_working_key, self.aes_working_key)
-    #         return True
+    #---------------------------------------Key Operations------------------------------------------------#
 
     def check_if_key_is_empty(self):
 
@@ -441,7 +417,6 @@ class MainWindow(QMainWindow):
                 self.AES_Cipher = AES_Cipher(self.aes_working_key, self.aes_working_key)
                 return False
 
-
     def generate_aes_key(self):
 
         if self.check_if_input_is_hex() == True:
@@ -450,34 +425,25 @@ class MainWindow(QMainWindow):
         else:
             self.aes_key = AESKeyGeneration()
             self.aes_key.key_generate()
-            self.AES_Cipher = AES_Cipher(self.aes_key.get_key(), self.aes_key.get_key())
+            self.AES_Cipher = AES_Cipher(self.aes_key.get_key(), self.aes_key.get_key())    
             self.key_input.setPlainText(byte_string_to_hex_string(self.aes_key.get_key()))
-            self.error_message("AES-Key successfully generated")
+            self.error_message("Key successfully generated")
 
         self.key_input.toPlainText()
 
-    def generate_rsa_key(self):
-        self.RSA_Key = RSAKeyGenerator()
-        self.RSA_Key.load_generator(265)
-        self.RSA = RSA(self.RSA_Key.get_public_key(), self.RSA_Key.get_private_key())
-        self.key_input.setPlainText(hex(self.RSA_Key.get_public_key().get_key_specific_number()))
-        self.key_output.setPlainText(hex(self.RSA_Key.get_private_key().get_key_specific_number()))
-        self.public_key.setPlainText(hex(self.RSA_Key.get_private_key().get_prime_number_product()))
-        self.error_message("RSA-Key successfully generated")
-
-
     def check_key_rsa(self):
-        if self.key_input.toPlainText() == "" and self.key_output.toPlainText() == "" and self.public_key.toPlainText() == "":
-            self.error_message("Generate a Key or insert one yourself")
-            return False
+        if self.key_input.toPlainText() == "":
+            print("generating Key")
+            self.RSA_Key = RSAKeyGenerator()
+            self.RSA_Key.load_generator(265)
+            self.RSA = RSA(self.RSA_Key.get_public_key(), self.RSA_Key.get_private_key())
 
-        elif "0x" in self.key_input.toPlainText() and "0x" in self.key_output.toPlainText() and "0x" in self.public_key.toPlainText():
-            self.RSA = RSA(RSAKeyModel(self.public_key.toPlainText(), self.key_input.toPlainText()), RSAKeyModel(self.public_key.toPlainText(), self.key_output.toPlainText()))
-            self.error_message("Working with your RSA Key")
-            return True
+        elif "0x" in self.key_input.toPlainText() and "0x" in self.key_input.toPlainText():
+            print("taking your key")
+            self.RSA = RSA(123, 123) #temporary
 
 
-    #------------------------------------------mischeläneus Methods---------------------------------------------------#
+    #--------------------------------------input checks---------------------------------------------------#
 
     def check_if_input_is_hex(self):
         input = self.text_input.toPlainText()
@@ -500,6 +466,7 @@ class MainWindow(QMainWindow):
             return False
 
 
+#------------------------------------------main program---------------------------------------------------#      
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
