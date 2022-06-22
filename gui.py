@@ -88,11 +88,13 @@ class MainWindow(QMainWindow):
 
         self.Drag_DropArea = QListWidget(self.centralwidget)
         self.Drag_DropArea.setGeometry(QtCore.QRect(90, 160, 256, 91))
-
+        self.setAcceptDrops(True)
+        self.setAutoFillBackground(True)
 
         self.centerlabel = QLabel(self.centralwidget)
-        self.centerlabel.setGeometry(QtCore.QRect(160, 180, 131, 61))
-
+        self.centerlabel.setGeometry(QtCore.QRect(190, 170, 131, 61))
+        self.pixmap = QtGui.QPixmap('images/download2.png')
+        self.centerlabel.setPixmap(self.pixmap)
 
 
         self.line_2 = QFrame(self.centralwidget)
@@ -214,7 +216,6 @@ class MainWindow(QMainWindow):
         self.browse_btn.setText(_translate("FileEncryption", "Browse..."))
         self.file_encrypt_option.setText(_translate("FileEncryption", "File Encryption"))
         self.text_encrypt_option.setText(_translate("FileEncryption", "Text Encryption"))
-        self.centerlabel.setText(_translate("FileEncryption", "Download Symbol"))
         self.header_2.setText(_translate("FileEncryption", "by Lorenz, Elias & Clemens"))
         self.input_file_name.setText(_translate("FileEncryption", "File loaded"))
         self.darkmode_btn.setText(_translate("FileEncryption", "Darkmode"))
@@ -246,6 +247,24 @@ class MainWindow(QMainWindow):
 
     def submit_encrypt(self):
         self.mytext = self.text_input.toPlainText()
+
+    def dragEnterEvent(self, event):
+        if event.mimeData().hasUrls:
+            event.accept()
+        else:
+            event.ignore()
+
+    def dragMoveEvent(self, event):
+        if event.mimeData().hasUrls():
+            event.setDropAction(Qt.CopyAction)
+            event.accept()
+        else:
+            event.ignore()
+
+    def dropEvent(self, event):
+        files = [u.toLocalFile() for u in event.mimeData().urls()]
+        for f in files:
+            print(f)
     
     #---------------------------------EVENTS-------------------------------------------#
 
