@@ -1,3 +1,4 @@
+from msilib.schema import File
 from Conversion import *
 from AES import AES_Cipher, AESKeyGeneration
 from RSA import *
@@ -14,7 +15,7 @@ class MainWindow(QMainWindow):
         self.RSA = None
         self.RSA_Key = None
         self.setWindowTitle("FileEncryption")
-        #self.setWindowIcon(QtGui.QIcon('images/icon.png'))
+        self.setWindowIcon(QtGui.QIcon('images/icon.png'))
 
     def initUI(self, FileEncryption):
         FileEncryption.setObjectName("FileEncryption")
@@ -49,7 +50,6 @@ class MainWindow(QMainWindow):
         self.verticalLayout_3.addWidget(self.text_input_label)
 
         self.text_input = QPlainTextEdit(self.verticalLayoutWidget_3)
-        self.text_input.setPlaceholderText("Input your text here...")
         self.verticalLayout_3.addWidget(self.text_input)
         
 
@@ -65,7 +65,6 @@ class MainWindow(QMainWindow):
         self.browse_btn = QPushButton(self.centralwidget)
         self.browse_btn.setGeometry(QtCore.QRect(90, 260, 93, 28))
         self.browse_btn.clicked.connect(self.browsefiles)
-        self.browse_btn.setToolTip("Open File Explorer")
 
 
         self.horizontalLayoutWidget = QWidget(self.centralwidget)
@@ -116,13 +115,10 @@ class MainWindow(QMainWindow):
         self.key_input = QTextEdit(self.centralwidget)
         self.key_input.setGeometry(QtCore.QRect(520, 400, 261, 40))
         self.key_input.setReadOnly(False)
-        self.key_input.setPlaceholderText("1. Feld")
-        self.text_input.setToolTip("Copy your key here")
         self.key_input.setTextInteractionFlags(QtCore.Qt.TextEditorInteraction)
 
         self.text_output = QTextEdit(self.centralwidget)
         self.text_output.setGeometry(QtCore.QRect(440, 570, 401, 81))
-        self.text_output.setPlaceholderText("Your decrypted text will spawn here...")
         self.text_output.setReadOnly(True)
 
         self.input_file_name = QLabel(self.centralwidget)
@@ -131,23 +127,19 @@ class MainWindow(QMainWindow):
         self.darkmode_btn = QPushButton(self.centralwidget)
         self.darkmode_btn.setGeometry(QtCore.QRect(580, 20, 121, 31))
         self.darkmode_btn.clicked.connect(self.darkmode_event)
-        self.darkmode_btn.setToolTip("Set Design to Darkmode")
         self.darkmode_btn.setCheckable(True)
 
         self.encrypt_btn = QPushButton(self.centralwidget)
         self.encrypt_btn.setGeometry(QtCore.QRect(440, 520, 121, 41))
         self.encrypt_btn.clicked.connect(self.encrypt_event)
-        self.encrypt_btn.setToolTip("Press Button to encrypt")
 
         self.decrypt_btn = QPushButton(self.centralwidget)
         self.decrypt_btn.setGeometry(QtCore.QRect(720, 520, 121, 41))
         self.decrypt_btn.clicked.connect(self.decrypt_event)
-        self.decrypt_btn.setToolTip("Press Button to decrypt")
 
         self.horizontalLayoutWidget_2 = QWidget(self.centralwidget)
         self.horizontalLayoutWidget_2.setGeometry(QtCore.QRect(80, 320, 871, 57))
         self.rsa_option = QRadioButton(self.horizontalLayoutWidget_2)
-        self.rsa_option.setToolTip("Choose RSA encryption")
 
         self.horizontalLayout_2 = QHBoxLayout(self.horizontalLayoutWidget_2)
         self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
@@ -157,7 +149,6 @@ class MainWindow(QMainWindow):
         self.horizontalLayout_2.addItem(spacerItem)
 
         self.aes_option = QRadioButton(self.horizontalLayoutWidget_2)
-        self.aes_option.setToolTip("Choose AES encryption")
         self.horizontalLayout_2.addWidget(self.aes_option)
 
         self.generate_key_button = QPushButton(self.horizontalLayoutWidget_2)
@@ -175,14 +166,12 @@ class MainWindow(QMainWindow):
         self.key_output = QTextEdit(self.centralwidget)
         self.key_output.setGeometry(QtCore.QRect(80, 480, 261, 40))
         self.key_output.setReadOnly(False)
-        self.key_output.setPlaceholderText("2. Feld")
         self.key_output.setTextInteractionFlags(QtCore.Qt.TextEditorInteraction)
 
         self.public_key = QTextEdit(self.centralwidget)
         self.public_key.setGeometry(QtCore.QRect(80, 560, 261, 40))
         self.public_key.setReadOnly(False)
         self.public_key.setTextInteractionFlags(QtCore.Qt.TextEditorInteraction)
-        self.public_key.setPlaceholderText("3. Feld")
 
         self.error_box = QLabel(self.centralwidget)
         self.error_box.setGeometry(QtCore.QRect(440, 480, 401, 21))
@@ -192,7 +181,26 @@ class MainWindow(QMainWindow):
         FileEncryption.setStatusBar(self.statusbar)
 
         self.fillUi(FileEncryption)
+        self.fillToolTipps(FileEncryption)
+        self.settaborder(FileEncryption)
         QtCore.QMetaObject.connectSlotsByName(FileEncryption)
+
+    def settaborder(self, FileEncryption):
+        FileEncryption.setTabOrder(self.file_encrypt_option, self.browse_btn)
+        FileEncryption.setTabOrder(self.browse_btn, self.text_encrypt_option)
+        FileEncryption.setTabOrder(self.text_encrypt_option, self.text_input)
+        FileEncryption.setTabOrder(self.text_input, self.rsa_option)
+        FileEncryption.setTabOrder(self.rsa_option, self.key_input2)
+        FileEncryption.setTabOrder(self.key_input2, self.key_output)
+        FileEncryption.setTabOrder(self.key_output, self.public_key)
+        FileEncryption.setTabOrder(self.public_key, self.aes_option)
+        FileEncryption.setTabOrder(self.aes_option, self.generate_key_button)
+        FileEncryption.setTabOrder(self.generate_key_button, self.key_input)
+        FileEncryption.setTabOrder(self.key_input, self.encrypt_btn)
+        FileEncryption.setTabOrder(self.encrypt_btn, self.decrypt_btn)
+        FileEncryption.setTabOrder(self.decrypt_btn, self.darkmode_btn)
+        FileEncryption.setTabOrder(self.darkmode_btn, self.text_output)
+        FileEncryption.setTabOrder(self.text_output, self.Drag_DropArea)
 
     def fillUi(self, FileEncryption):
         _translate = QtCore.QCoreApplication.translate
@@ -212,6 +220,20 @@ class MainWindow(QMainWindow):
         self.aes_option.setText(_translate("FileEncryption", "AES - Encryption"))
         self.generate_key_button.setText(_translate("FileEncryption", "Generate Key"))
         self.aes_label.setText(_translate("FileEncryption", "AES-Key:"))
+        self.public_key.setPlaceholderText("3. Feld")
+        self.key_output.setPlaceholderText("2. Feld")
+        self.text_output.setPlaceholderText("Your decrypted text will spawn here...")
+        self.key_input.setPlaceholderText("1. Feld")
+        self.text_input.setPlaceholderText("Input your text here...")
+
+    def fillToolTipps(self, FileEncryption):
+        self.rsa_option.setToolTip("Choose RSA encryption")
+        self.decrypt_btn.setToolTip("Press Button to decrypt")
+        self.encrypt_btn.setToolTip("Press Button to encrypt")
+        self.aes_option.setToolTip("Choose AES encryption")
+        self.darkmode_btn.setToolTip("Set Design to Darkmode")
+        self.text_input.setToolTip("Copy your key here")
+        self.browse_btn.setToolTip("Open File Explorer")
 
     def browsefiles(self):
         self.temp_path = QFileDialog.getOpenFileName(self, "Open File")
