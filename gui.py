@@ -99,7 +99,7 @@ class MainWindow(QMainWindow):
 
 
         self.line_2 = QFrame(self.centralwidget)
-        self.line_2.setGeometry(QtCore.QRect(460, 70, 21, 231))
+        self.line_2.setGeometry(QtCore.QRect(450, 60, 21, 240))
         self.line_2.setFrameShape(QFrame.VLine)
         self.line_2.setFrameShadow(QFrame.Sunken)
 
@@ -128,7 +128,7 @@ class MainWindow(QMainWindow):
         self.text_output.setReadOnly(True)
 
         self.input_file_name = QLabel(self.centralwidget)
-        self.input_file_name.setGeometry(QtCore.QRect(210, 260, 191, 31))
+        self.input_file_name.setGeometry(QtCore.QRect(210, 260, 250, 30))
 
         self.darkmode_btn = QPushButton(self.centralwidget)
         self.darkmode_btn.setGeometry(QtCore.QRect(580, 20, 121, 31))
@@ -219,7 +219,7 @@ class MainWindow(QMainWindow):
         self.file_encrypt_option.setText(_translate("FileEncryption", "File Encryption"))
         self.text_encrypt_option.setText(_translate("FileEncryption", "Text Encryption"))
         self.header_2.setText(_translate("FileEncryption", "by Lorenz, Elias & Clemens"))
-        self.input_file_name.setText(_translate("FileEncryption", "File loaded"))
+        self.input_file_name.setText(_translate("FileEncryption", ""))
         self.darkmode_btn.setText(_translate("FileEncryption", "Darkmode"))
         self.encrypt_btn.setText(_translate("FileEncryption", "Encrypt"))
         self.decrypt_btn.setText(_translate("FileEncryption", "Decrypt"))
@@ -288,9 +288,14 @@ class MainWindow(QMainWindow):
     def darkmode_event(self):
         if self.darkmode_btn.isChecked():
             app.setStyleSheet(qdarktheme.load_stylesheet("light"))
+            self.pixmap = QtGui.QPixmap('images/download1.png')
+            self.centerlabel.setPixmap(self.pixmap)
+            
 
         else:
             app.setStyleSheet(qdarktheme.load_stylesheet())
+            self.pixmap = QtGui.QPixmap('images/download2.png')
+            self.centerlabel.setPixmap(self.pixmap)
 
     def generate_key(self):
         if self.rsa_option.isChecked():
