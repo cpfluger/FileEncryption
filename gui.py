@@ -105,12 +105,10 @@ class MainWindow(QMainWindow):
         self.horizontalLayout.addItem(spacerItem1)
 
         self.file_encrypt_option.setFont(headingfont)
-        #self.file_encrypt_option.clicked.connect(self.file_option_event)
         self.file_encrypt_option.setChecked(True)
 
 
         self.text_encrypt_option.setFont(headingfont)
-        #self.text_encrypt_option.clicked.connect(self.text_option_event)
 
 
         self.Drag_DropArea = QListWidget(self.centralwidget)
@@ -280,6 +278,7 @@ class MainWindow(QMainWindow):
         elif self.aes_option.isChecked():
             self.AES_encrypt()
 
+
     def decrypt_event(self):
 
         self.text_output.setPlainText("")
@@ -315,16 +314,6 @@ class MainWindow(QMainWindow):
 
         self.error_box.setText("")
         self.error_box.setText(input)
-
-
-    def text_option_event(self): #?
-        pass
-
-
-    def file_option_event(self):  #?
-        print("i was pressed")
-
-        self.text_input.setPlainText("")
 
 
     def dragEnterEvent(self, event):
