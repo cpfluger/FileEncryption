@@ -1,5 +1,3 @@
-from msilib.schema import File
-from turtle import heading
 from Conversion import *
 from AES import AES_Cipher, AESKeyGeneration
 from RSA import *
@@ -239,25 +237,8 @@ class MainWindow(QMainWindow):
 
         self.fillUi(FileEncryption)
         self.fillToolTipps(FileEncryption)
-        self.settaborder(FileEncryption)
         QtCore.QMetaObject.connectSlotsByName(FileEncryption)
 
-    def settaborder(self, FileEncryption):
-        FileEncryption.setTabOrder(self.file_encrypt_option, self.browse_btn)
-        FileEncryption.setTabOrder(self.browse_btn, self.text_encrypt_option)
-        FileEncryption.setTabOrder(self.text_encrypt_option, self.text_input)
-        FileEncryption.setTabOrder(self.text_input, self.rsa_option)
-        FileEncryption.setTabOrder(self.rsa_option, self.key_input2)
-        FileEncryption.setTabOrder(self.key_input2, self.key_output)
-        FileEncryption.setTabOrder(self.key_output, self.public_key)
-        FileEncryption.setTabOrder(self.public_key, self.aes_option)
-        FileEncryption.setTabOrder(self.aes_option, self.generate_key_button)
-        FileEncryption.setTabOrder(self.generate_key_button, self.key_input)
-        FileEncryption.setTabOrder(self.key_input, self.encrypt_btn)
-        FileEncryption.setTabOrder(self.encrypt_btn, self.decrypt_btn)
-        FileEncryption.setTabOrder(self.decrypt_btn, self.darkmode_btn)
-        FileEncryption.setTabOrder(self.darkmode_btn, self.text_output)
-        FileEncryption.setTabOrder(self.text_output, self.Drag_DropArea)
 
     def fillUi(self, FileEncryption):
         _translate = QtCore.QCoreApplication.translate
@@ -282,7 +263,8 @@ class MainWindow(QMainWindow):
         self.key_input.setPlaceholderText("Generated Key")
         self.text_input.setPlaceholderText("Input your text here...")
 
-    def fillToolTipps(self, FileEncryption):
+
+    def fillToolTipps(self,):
         self.rsa_option.setToolTip("Choose RSA encryption")
         self.decrypt_btn.setToolTip("Press Button to decrypt")
         self.encrypt_btn.setToolTip("Press Button to encrypt")
@@ -291,33 +273,8 @@ class MainWindow(QMainWindow):
         self.text_input.setToolTip("Copy your key here")
         self.browse_btn.setToolTip("Open File Explorer")
 
-    def browsefiles(self):
-        self.temp_path = QFileDialog.getOpenFileName(self, "Open File")
-        print(self.temp_path[0])
-        self.input_file_name.setText(self.temp_path[0])
 
-    def submit_encrypt(self):
-        self.mytext = self.text_input.toPlainText()
-
-    def dragEnterEvent(self, event):
-        if event.mimeData().hasUrls:
-            event.accept()
-        else:
-            event.ignore()
-
-    def dragMoveEvent(self, event):
-        if event.mimeData().hasUrls():
-            event.setDropAction(Qt.CopyAction)
-            event.accept()
-        else:
-            event.ignore()
-
-    def dropEvent(self, event):
-        files = [u.toLocalFile() for u in event.mimeData().urls()]
-        for f in files:
-            print(f)
-    
-    #---------------------------------EVENTS-------------------------------------------#
+    #---------------------------------------------EVENTS-------------------------------------------------#
 
     def encrypt_event(self):
         self.text_output.setPlainText("")
@@ -359,14 +316,33 @@ class MainWindow(QMainWindow):
 
     def text_option_event(self):
         pass
-    
+
     def file_option_event(self):
         pass
 
     def delete_input_event(self):
         self.text_input.setPlainText("")
 
-    #--------------------------------Encrypt & Decrypt---------------------------------#  
+    def dragEnterEvent(self, event):
+        if event.mimeData().hasUrls:
+            event.accept()
+        else:
+            event.ignore()
+
+    def dropEvent(self, event):
+        files = [u.toLocalFile() for u in event.mimeData().urls()]
+        for f in files:
+            print(f)
+
+    def browsefiles(self):
+        self.temp_path = QFileDialog.getOpenFileName(self, "Open File")
+        print(self.temp_path[0])
+        self.input_file_name.setText(self.temp_path[0])
+
+    def submit_encrypt(self):
+        self.mytext = self.text_input.toPlainText()
+
+    #----------------------------------------Encrypt & Decrypt--------------------------------------------#  
       
 
 
@@ -422,7 +398,7 @@ class MainWindow(QMainWindow):
         decrypted_text = self.RSA.decrypt(hex_string_to_decimal_array(encrypted_text))
         self.text_input.setPlainText(decimal_array_to__ascii_string(decrypted_text))
 
-    #-----------------------------------------Key Operations-------------------------------------------#
+    #---------------------------------------Key Operations------------------------------------------------#
 
     def check_if_key_is_empty(self):
 
@@ -468,7 +444,7 @@ class MainWindow(QMainWindow):
             self.RSA = RSA(123, 123) #temporary
 
 
-    #------------------------------------------mischeläneus Methods---------------------------------------------------#
+    #--------------------------------------input checks---------------------------------------------------#
 
     def check_if_input_is_hex(self):
         input = self.text_input.toPlainText()
@@ -491,7 +467,8 @@ class MainWindow(QMainWindow):
             return False
 
 
-            
+#------------------------------------------main program---------------------------------------------------#      
+
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     app.setStyleSheet(qdarktheme.load_stylesheet())
