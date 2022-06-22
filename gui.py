@@ -356,7 +356,7 @@ class MainWindow(QMainWindow):
     def AES_encrypt(self):
         
         if self.check_if_input_is_empty() == False:
-            self.update_file()
+            
             if self.check_if_input_is_hex() == False:
 
                 if self.check_if_key_is_empty() == False:
@@ -387,7 +387,7 @@ class MainWindow(QMainWindow):
     def AES_decrypt(self):
         
         if self.check_if_input_is_empty() == False:
-            self.update_file()
+
             if self.check_if_input_is_hex() == True:
     
                 if self.check_if_key_is_empty() == False:
@@ -473,6 +473,7 @@ class MainWindow(QMainWindow):
     def check_if_input_is_hex(self):
 
         if self.file_encrypt_option.isChecked():
+            self.update_file()
             input = self.file_input_content
             if input[0:2] == "0x":
                 return True
